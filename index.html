@@ -1,0 +1,706 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>HB Gewährleistung</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+/* Layout: Arbeitswerkzeug mit fester Navigation links (mobil: Leiste oben), Inhalt als Akte mit Fakten rechts */
+:root{
+  --bg:#f2f3ee; --surface:#ffffff; --surface-2:#eaece4; --line:#d6dacd; --fg:#1d2218; --muted:#5d6555;
+  --accent:#687451; --accent-ink:#ffffff; --accent-soft:#e3e8d9;
+  --ok:#2c7a4b; --ok-soft:#dcefe2; --warn:#a8650f; --warn-soft:#f6e7cf; --crit:#b42318; --crit-soft:#f8dcd8; --info:#2a62a6; --info-soft:#dbe7f5;
+  --font-ui:"Instrument Sans", "Segoe UI", system-ui, sans-serif; --font-mono:"JetBrains Mono", ui-monospace, "SFMono-Regular", Consolas, monospace;
+  --r:10px;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#131611; --surface:#1b1f18; --surface-2:#242a20; --line:#343b2d; --fg:#e5e9de; --muted:#a2aa97;
+  --accent:#a6b78b; --accent-ink:#131611; --accent-soft:#2c3524;
+  --ok:#62c48f; --ok-soft:#1d3426; --warn:#e3aa55; --warn-soft:#3a2c17; --crit:#f08a7f; --crit-soft:#3d1f1b; --info:#80b2ea; --info-soft:#1c2c40; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#131611; --surface:#1b1f18; --surface-2:#242a20; --line:#343b2d; --fg:#e5e9de; --muted:#a2aa97;
+  --accent:#a6b78b; --accent-ink:#131611; --accent-soft:#2c3524;
+  --ok:#62c48f; --ok-soft:#1d3426; --warn:#e3aa55; --warn-soft:#3a2c17; --crit:#f08a7f; --crit-soft:#3d1f1b; --info:#80b2ea; --info-soft:#1c2c40; color-scheme:dark}
+*{box-sizing:border-box}
+html,body{background:var(--bg);color:var(--fg)}
+body{font-family:var(--font-ui);font-size:14px;line-height:1.5}
+button,input,select,textarea{font:inherit;color:inherit}
+.mono{font-family:var(--font-mono);font-size:.86em;font-variant-numeric:tabular-nums}
+.muted{color:var(--muted)}
+.app{display:grid;grid-template-columns:236px minmax(0,1fr);min-height:100vh}
+.side{background:var(--surface);border-right:1px solid var(--line);padding:20px 14px;display:flex;flex-direction:column;gap:18px;position:sticky;top:0;height:100vh}
+.brand{display:flex;align-items:center;gap:10px;padding:0 6px}
+.mark{width:32px;height:32px;border-radius:8px;background:var(--accent);color:var(--accent-ink);display:grid;place-items:center;font-weight:700;font-size:13px;letter-spacing:.02em}
+.brand b{display:block;font-size:14px}.brand span{font-size:12px;color:var(--muted)}
+.obj{border:1px solid var(--line);border-radius:var(--r);padding:10px 12px;background:var(--surface-2)}
+.obj small{display:block;font-size:11px;text-transform:uppercase;letter-spacing:.06em;color:var(--muted)}
+.obj b{font-size:13px}
+.nav{display:flex;flex-direction:column;gap:2px}
+.nav button{all:unset;cursor:pointer;display:flex;align-items:center;justify-content:space-between;gap:8px;padding:8px 10px;border-radius:8px;color:var(--muted);font-weight:500}
+.nav button:hover{background:var(--surface-2);color:var(--fg)}
+.nav button[aria-current="true"]{background:var(--accent-soft);color:var(--fg)}
+.nav button:focus-visible,.btn:focus-visible,.chip:focus-visible,.row:focus-visible,.tab:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.nav .sep{font-size:11px;text-transform:uppercase;letter-spacing:.07em;color:var(--muted);padding:12px 10px 4px}
+.count{font-size:11px;background:var(--surface-2);border:1px solid var(--line);border-radius:20px;padding:0 7px;font-variant-numeric:tabular-nums}
+.count.hot{background:var(--accent);border-color:var(--accent);color:var(--accent-ink)}
+.who{margin-top:auto;display:flex;flex-direction:column;gap:6px}
+.who label{font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:.06em}
+select,input[type=text],input[type=date],input[type=time],textarea{background:var(--surface);border:1px solid var(--line);border-radius:8px;padding:7px 10px;width:100%}
+textarea{min-height:180px;resize:vertical;line-height:1.55}
+main{padding-block:28px 60px;padding-inline:clamp(16px,3vw,36px);min-width:0}
+.demo{font-size:12px;color:var(--muted);display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin-bottom:14px}
+.demo .tag{border:1px dashed var(--line);border-radius:20px;padding:1px 9px}
+h1{font-size:24px;line-height:1.2;margin:0;text-wrap:balance;letter-spacing:-.01em}
+h2{font-size:15px;margin:0}
+h3{font-size:13px;margin:0;text-transform:uppercase;letter-spacing:.06em;color:var(--muted);font-weight:600}
+.ph{display:flex;justify-content:space-between;align-items:flex-end;gap:16px;flex-wrap:wrap;margin-bottom:20px}
+.ph p{margin:4px 0 0;color:var(--muted)}
+.btns{display:flex;gap:8px;flex-wrap:wrap}
+.btn{cursor:pointer;border:1px solid var(--line);background:var(--surface);border-radius:8px;padding:7px 12px;font-weight:500;display:inline-flex;align-items:center;gap:6px}
+.btn:hover{border-color:var(--accent)}
+.btn.primary{background:var(--accent);border-color:var(--accent);color:var(--accent-ink)}
+.btn.danger{color:var(--crit);border-color:var(--crit-soft)}
+.btn.sm{padding:4px 9px;font-size:13px}
+.btn.block{width:100%;justify-content:flex-start}
+.btn small{color:inherit;opacity:.7;font-weight:400;margin-left:auto}
+.kpis{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;margin-bottom:20px}
+.kpi{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:14px 16px;cursor:pointer;text-align:left}
+.kpi:hover{border-color:var(--accent)}
+.kpi .n{font-size:28px;font-weight:600;font-variant-numeric:tabular-nums;line-height:1.1}
+.kpi .l{color:var(--muted);font-size:13px}
+.kpi.alert .n{color:var(--crit)}
+.grid2{display:grid;grid-template-columns:minmax(0,1.35fr) minmax(0,1fr);gap:16px;align-items:start}
+.grid-side{display:grid;grid-template-columns:minmax(0,1fr) 320px;gap:18px;align-items:start}
+.panel{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:16px;min-width:0}
+.panel+.panel{margin-top:16px}
+.panel-h{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-bottom:12px}
+.todo{display:flex;flex-direction:column}
+.todo button{all:unset;cursor:pointer;display:grid;grid-template-columns:auto minmax(0,1fr) auto;gap:10px;align-items:center;padding:10px 4px;border-top:1px solid var(--line)}
+.todo button:first-child{border-top:0}
+.todo button:hover b{text-decoration:underline}
+.dot{width:8px;height:8px;border-radius:50%;background:var(--muted)}
+.dot.crit{background:var(--crit)}.dot.warn{background:var(--warn)}.dot.info{background:var(--info)}.dot.ok{background:var(--ok)}.dot.acc{background:var(--accent)}
+.pill{display:inline-flex;align-items:center;gap:5px;font-size:12px;font-weight:600;border-radius:20px;padding:2px 9px;white-space:nowrap}
+.p-neu{background:var(--info-soft);color:var(--info)}
+.p-pruefung{background:var(--warn-soft);color:var(--warn)}
+.p-frist{background:var(--accent-soft);color:var(--fg)}
+.p-einschreiben{background:var(--warn-soft);color:var(--warn)}
+.p-termin{background:var(--info-soft);color:var(--info)}
+.p-freigabe{background:var(--accent-soft);color:var(--fg)}
+.p-bautraeger{background:var(--crit-soft);color:var(--crit)}
+.p-abgelehnt{background:var(--surface-2);color:var(--muted)}
+.p-geschlossen{background:var(--ok-soft);color:var(--ok)}
+.prio{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--crit)}
+.chips{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:12px}
+.chip{cursor:pointer;border:1px solid var(--line);background:var(--surface);border-radius:20px;padding:4px 11px;font-size:13px}
+.chip[aria-pressed="true"]{background:var(--fg);color:var(--bg);border-color:var(--fg)}
+.list{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);overflow:hidden}
+.row{cursor:pointer;display:grid;grid-template-columns:86px minmax(0,1.6fr) minmax(0,1fr) 150px 120px 34px;gap:12px;align-items:center;padding:12px 16px;border-top:1px solid var(--line)}
+.row:first-child{border-top:0}
+.row:hover{background:var(--surface-2)}
+.row.head{cursor:default;background:var(--surface-2);font-size:12px;color:var(--muted);text-transform:uppercase;letter-spacing:.05em;padding-block:8px}
+.row .t b{display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.row .t span{font-size:12px;color:var(--muted)}
+.av{width:28px;height:28px;border-radius:50%;display:grid;place-items:center;font-size:11px;font-weight:700;background:var(--surface-2);border:1px solid var(--line)}
+.av.NK{background:var(--accent);color:var(--accent-ink);border-color:var(--accent)}
+.due{font-size:13px;font-variant-numeric:tabular-nums}
+.due.crit{color:var(--crit);font-weight:600}.due.warn{color:var(--warn);font-weight:600}
+.back{all:unset;cursor:pointer;color:var(--muted);font-size:13px;margin-bottom:10px;display:inline-block}
+.back:hover{color:var(--fg)}
+.stepper{display:flex;gap:4px;margin:16px 0 18px;overflow-x:auto;padding-bottom:4px}
+.step{flex:1 0 96px;font-size:11.5px;color:var(--muted);display:flex;flex-direction:column;gap:6px}
+.step i{height:5px;border-radius:3px;background:var(--surface-2);border:1px solid var(--line)}
+.step.done i{background:var(--accent);border-color:var(--accent)}
+.step.now i{background:repeating-linear-gradient(90deg,var(--accent) 0 6px,var(--accent-soft) 6px 10px);border-color:var(--accent)}
+.step.now{color:var(--fg);font-weight:600}
+.step.skip i{background:transparent;border-style:dashed}
+.ki{border:1px solid var(--accent);background:linear-gradient(var(--accent-soft),var(--surface) 70%)}
+.ki-h{display:flex;align-items:center;gap:8px;font-weight:600}
+.ki-badge{font-size:11px;font-family:var(--font-mono);border:1px solid var(--accent);border-radius:5px;padding:0 6px}
+.facts{display:grid;grid-template-columns:auto minmax(0,1fr);gap:6px 14px;margin:0}
+.facts dt{color:var(--muted);font-size:13px}
+.facts dd{margin:0;font-weight:500}
+.conf{display:grid;grid-template-columns:minmax(0,1fr) 90px 38px;gap:8px;align-items:center;font-size:13px;margin-top:6px}
+.bar{height:6px;background:var(--surface-2);border-radius:3px;overflow:hidden}
+.bar b{display:block;height:100%;background:var(--accent)}
+.verdict{display:inline-flex;gap:6px;align-items:center;font-weight:600;padding:3px 10px;border-radius:6px;margin:10px 0 6px}
+.v-ok{background:var(--ok-soft);color:var(--ok)}.v-warn{background:var(--warn-soft);color:var(--warn)}.v-mix{background:var(--info-soft);color:var(--info)}
+.note{font-size:12.5px;color:var(--muted);border-top:1px dashed var(--line);padding-top:8px;margin-top:10px}
+.tabs{display:flex;gap:2px;border-bottom:1px solid var(--line);margin:-4px 0 14px;overflow-x:auto}
+.tab{all:unset;cursor:pointer;padding:8px 12px;font-weight:500;color:var(--muted);border-bottom:2px solid transparent;white-space:nowrap}
+.tab[aria-selected="true"]{color:var(--fg);border-color:var(--accent)}
+.chat{display:flex;flex-direction:column;gap:12px}
+.msg{max-width:88%;border:1px solid var(--line);border-radius:10px;padding:10px 12px;background:var(--surface-2)}
+.msg.out{align-self:flex-end;background:var(--accent-soft);border-color:transparent}
+.msg.sys{align-self:center;background:transparent;border-style:dashed;font-size:12.5px;color:var(--muted);max-width:100%}
+.msg .meta{font-size:11.5px;color:var(--muted);display:flex;gap:8px;flex-wrap:wrap;margin-bottom:4px}
+.msg p{margin:0;white-space:pre-line}
+.att{display:inline-flex;margin-top:6px;font-size:12px;border:1px solid var(--line);border-radius:6px;padding:1px 8px;background:var(--surface)}
+.empty{color:var(--muted);font-size:13px;padding:16px;text-align:center;border:1px dashed var(--line);border-radius:8px}
+.docs{display:grid;grid-template-columns:repeat(auto-fill,minmax(120px,1fr));gap:10px}
+.doc{border:1px solid var(--line);border-radius:8px;overflow:hidden;background:var(--surface)}
+.doc .img{aspect-ratio:4/3;max-width:100%;display:grid;place-items:center;font-size:11px;color:var(--muted);background:repeating-linear-gradient(135deg,var(--surface-2) 0 10px,var(--bg) 10px 20px)}
+.doc .img.pdf{background:var(--surface-2);font-family:var(--font-mono);font-weight:500;color:var(--fg)}
+.doc .cap{font-size:11.5px;padding:6px 8px;display:flex;flex-direction:column}
+.doc .cap span{color:var(--muted)}
+.log{list-style:none;margin:0;padding:0;font-size:12.5px}
+.log li{display:grid;grid-template-columns:72px minmax(0,1fr);gap:8px;padding:6px 0;border-top:1px solid var(--line)}
+.log li:first-child{border-top:0}
+.log time{font-family:var(--font-mono);font-size:11px;color:var(--muted)}
+.actions{display:flex;flex-direction:column;gap:6px}
+.actions .grp{font-size:11px;text-transform:uppercase;letter-spacing:.06em;color:var(--muted);margin-top:8px}
+.inbox{display:grid;grid-template-columns:minmax(0,340px) minmax(0,1fr);gap:16px;align-items:start}
+.mail{all:unset;cursor:pointer;display:block;padding:12px 14px;border-top:1px solid var(--line)}
+.mail:first-child{border-top:0}
+.mail:hover{background:var(--surface-2)}
+.mail[aria-current="true"]{background:var(--accent-soft)}
+.mail b{display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.mail .from{font-size:12px;color:var(--muted);display:flex;justify-content:space-between;gap:8px}
+.mail .k{font-size:11.5px;margin-top:4px;color:var(--accent);font-weight:600}
+.mailbody{white-space:pre-line;background:var(--surface-2);border-radius:8px;padding:12px;margin:12px 0}
+.sugg{border:1px solid var(--line);border-radius:8px;padding:10px 12px;display:flex;justify-content:space-between;gap:10px;align-items:center;flex-wrap:wrap;margin-top:8px}
+.week{margin-bottom:16px}
+.week h3{margin-bottom:8px}
+.drow{display:grid;grid-template-columns:110px 90px minmax(0,1fr) auto;gap:12px;align-items:center;padding:10px 14px;border-top:1px solid var(--line);cursor:pointer}
+.drow:first-of-type{border-top:0}
+.drow:hover{background:var(--surface-2)}
+.tl{position:relative;font-size:12px}
+.tl-row{display:grid;grid-template-columns:150px minmax(0,1fr);gap:10px;align-items:center;padding:4px 0}
+.tl-row span{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.track{position:relative;height:14px;background:var(--surface-2);border-radius:4px}
+.seg{position:absolute;top:0;bottom:0;background:var(--accent);opacity:.75;border-radius:4px}
+.seg.soon{background:var(--warn);opacity:.9}
+.today{position:absolute;top:-4px;bottom:-4px;width:2px;background:var(--crit)}
+.ticks{display:grid;grid-template-columns:150px minmax(0,1fr);gap:10px;margin-top:4px}
+.ticks div{position:relative;height:16px}
+.ticks span{position:absolute;transform:translateX(-50%);font-family:var(--font-mono);font-size:10.5px;color:var(--muted)}
+.tw{overflow-x:auto}
+table{border-collapse:collapse;width:100%;min-width:860px;font-size:13px}
+th{text-align:left;font-size:11.5px;text-transform:uppercase;letter-spacing:.05em;color:var(--muted);font-weight:600;padding:8px 10px;border-bottom:1px solid var(--line);background:var(--surface-2)}
+td{padding:10px;border-bottom:1px solid var(--line);vertical-align:top}
+tr:last-child td{border-bottom:0}
+td .sub{display:block;color:var(--muted);font-size:12px}
+.team{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin-bottom:16px}
+.member{display:flex;flex-direction:column;gap:8px}
+.member .top{display:flex;gap:10px;align-items:center}
+.state{font-size:12px;font-weight:600;display:inline-flex;gap:6px;align-items:center}
+.sched{display:grid;grid-template-columns:40px repeat(13,minmax(18px,1fr));gap:2px;font-size:10.5px;min-width:520px}
+.sched .h{font-family:var(--font-mono);color:var(--muted);text-align:left}
+.sched .d{color:var(--muted);font-weight:600}
+.cell{height:22px;border-radius:3px;background:var(--surface-2)}
+.cell.on{background:var(--accent)}
+.cell.on.p2{background:var(--info)}
+.cell.on.p3{background:var(--warn)}
+.cell.now{outline:2px solid var(--crit);outline-offset:-2px}
+.legend{display:flex;gap:14px;flex-wrap:wrap;font-size:12px;color:var(--muted);margin-top:10px}
+.legend i{display:inline-block;width:10px;height:10px;border-radius:2px;margin-right:5px;vertical-align:-1px}
+.toggle{display:flex;justify-content:space-between;gap:12px;align-items:center;padding:9px 0;border-top:1px solid var(--line)}
+.toggle:first-of-type{border-top:0}
+.sw{all:unset;cursor:pointer;width:36px;height:20px;border-radius:20px;background:var(--line);position:relative;flex:none}
+.sw::after{content:"";position:absolute;top:2px;left:2px;width:16px;height:16px;border-radius:50%;background:var(--surface);transition:left .15s}
+.sw[aria-checked="true"]{background:var(--accent)}
+.sw[aria-checked="true"]::after{left:18px}
+.portals{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:24px;align-items:start}
+.phone{max-width:380px;width:100%;margin:0 auto;border:1px solid var(--line);border-radius:28px;background:var(--surface);padding:14px;box-shadow:0 8px 30px rgba(0,0,0,.08)}
+.phone .bar-top{display:flex;justify-content:space-between;font-size:11px;color:var(--muted);padding:0 8px 10px}
+.pscreen{background:var(--bg);border-radius:18px;padding:16px;display:flex;flex-direction:column;gap:12px}
+.pscreen .ptitle{font-weight:700;font-size:16px}
+.pcard{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:12px}
+.vsteps{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:8px;font-size:13px}
+.vsteps li{display:flex;gap:8px;align-items:flex-start}
+.vsteps li .dot{margin-top:6px;flex:none}
+.big{width:100%;justify-content:center;padding:11px;font-size:15px}
+.upload{border:1px dashed var(--line);border-radius:10px;padding:12px;text-align:center;font-size:13px;color:var(--muted);display:block;cursor:pointer}
+.upload input{display:none}
+.caption{font-size:12.5px;color:var(--muted);text-align:center;margin-top:10px}
+dialog{border:0;padding:0;background:transparent;max-width:min(720px,calc(100vw - 32px));width:100%}
+dialog::backdrop{background:rgba(10,12,8,.5)}
+.dlg{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:20px;display:flex;flex-direction:column;gap:12px;max-height:calc(100vh - 48px);overflow:auto}
+.dlg .row2{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:10px}
+.dlg label{font-size:12px;color:var(--muted);display:flex;flex-direction:column;gap:4px}
+.hint{font-size:12.5px;background:var(--surface-2);border-radius:8px;padding:8px 10px}
+.hint.warn{background:var(--warn-soft);color:var(--warn)}
+.foot{display:flex;justify-content:flex-end;gap:8px;flex-wrap:wrap}
+#toast{position:fixed;left:50%;bottom:calc(20px + env(safe-area-inset-bottom,0px));transform:translateX(-50%);background:var(--fg);color:var(--bg);padding:10px 16px;border-radius:10px;font-weight:500;z-index:50;max-width:calc(100vw - 32px)}
+.report{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}
+.report div{background:var(--surface-2);border-radius:8px;padding:10px}
+.report b{display:block;font-size:20px;font-variant-numeric:tabular-nums}
+@media (max-width:1100px){.grid-side{grid-template-columns:minmax(0,1fr)}.team{grid-template-columns:minmax(0,1fr)}}
+@media (max-width:900px){
+  .app{grid-template-columns:minmax(0,1fr)}
+  .side{position:sticky;top:env(safe-area-inset-top,0px);height:auto;z-index:10;flex-direction:row;flex-wrap:wrap;align-items:center;gap:10px;padding:10px 16px;border-right:0;border-bottom:1px solid var(--line)}
+  .obj,.who label{display:none}
+  .who{margin:0 0 0 auto;flex-direction:row}
+  .who select{width:auto;padding:4px 8px;font-size:13px}
+  .nav{flex-direction:row;overflow-x:auto;width:100%;gap:4px;padding-bottom:2px}
+  .nav button{white-space:nowrap;padding:6px 10px}
+  .nav .sep{display:none}
+  .grid2,.inbox,.portals{grid-template-columns:minmax(0,1fr)}
+  .kpis{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .row{grid-template-columns:minmax(0,1fr) auto;gap:4px 10px}
+  .row.head{display:none}
+  .row .c-id{grid-column:1/3;font-size:12px}
+  .row .c-gw,.row .c-av{display:none}
+  .drow{grid-template-columns:90px minmax(0,1fr);}
+  .drow .c-x{display:none}
+}
+@media (max-width:480px){.dlg .row2,.report{grid-template-columns:minmax(0,1fr)}.tl-row,.ticks{grid-template-columns:96px minmax(0,1fr)}}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+</head>
+<body>
+<div class="app">
+  <aside class="side">
+    <div class="brand"><div class="mark">HB</div><div><b>HB Gewährleistung</b><span>Mängelmanagement</span></div></div>
+    <div class="obj"><small>Objekt · Bauträger</small><b>Quartier am Illerpark, Kempten</b><div class="muted" style="font-size:12px">Allgäu Wohnbau GmbH · 68 Einheiten</div></div>
+    <nav class="nav" id="nav"></nav>
+    <div class="who"><label for="role">Angemeldet als</label>
+      <select id="role"><option value="NK">Niko Krnic · Admin</option><option value="ED">Emre Doganer · Bearbeiter</option></select></div>
+  </aside>
+  <main id="main"></main>
+</div>
+<dialog id="dlg"></dialog>
+<div id="toast" hidden></div>
+
+<script>
+const TODAY = new Date('2026-11-18T14:20:00');
+const D = s => new Date(s + 'T12:00:00');
+const fmt = d => (typeof d === 'string' ? D(d) : d).toLocaleDateString('de-DE',{day:'2-digit',month:'2-digit',year:'numeric'});
+const fmtS = d => (typeof d === 'string' ? D(d) : d).toLocaleDateString('de-DE',{weekday:'short',day:'2-digit',month:'2-digit'});
+const days = s => Math.round((D(s) - new Date('2026-11-18T12:00:00'))/864e5);
+const iso = d => d.toISOString().slice(0,10);
+const HOL = ['2026-12-25','2026-12-26','2027-01-01','2027-01-06'];
+function fristIn(n){ const d=new Date('2026-11-18T12:00:00'); d.setDate(d.getDate()+n); let moved=false;
+  while(d.getDay()===0||d.getDay()===6||HOL.includes(iso(d))){d.setDate(d.getDate()+1);moved=true}
+  return {d, moved}; }
+
+const PEOPLE = {
+  NK:{name:'Niko Krnic', role:'Admin', short:'NK'},
+  ED:{name:'Emre Doganer', role:'Bearbeiter', short:'ED'},
+  LB:{name:'Lena Berger', role:'Bearbeiterin · Minijob (Beispiel)', short:'LB'}
+};
+
+const TRADES = {
+  T01:{gewerk:'Fenster & Rollläden', firma:'Allgäuer Fensterbau Kraus GmbH', person:'Thomas Kraus', mail:'service@fensterbau-kraus.example', tel:'0831 551240', vertrag:'VOB/B', abnahme:'2026-06-30', ende:'2030-06-30', sich:'Bürgschaft 5 % · 18.400 €', reakt:'2,1 Tage'},
+  T02:{gewerk:'Sanitär', firma:'Haustechnik Weixler GmbH', person:'Julia Weixler', mail:'kundendienst@weixler-haustechnik.example', tel:'0831 960310', vertrag:'BGB', abnahme:'2026-07-15', ende:'2031-07-15', sich:'Einbehalt 5 % · 21.700 €', reakt:'1,4 Tage'},
+  T03:{gewerk:'Heizung & Lüftung', firma:'Wärme & Luft Riedle GmbH', person:'Markus Riedle', mail:'service@riedle-wl.example', tel:'0831 704455', vertrag:'VOB/B', abnahme:'2026-07-15', ende:'2030-07-15', sich:'Bürgschaft 5 % · 26.900 €', reakt:'6,8 Tage'},
+  T04:{gewerk:'Elektro', firma:'Elektro Gschwend & Söhne', person:'Florian Gschwend', mail:'buero@gschwend-elektro.example', tel:'08374 2219', vertrag:'VOB/B', abnahme:'2026-07-10', ende:'2030-07-10', sich:'Bürgschaft 5 % · 15.200 €', reakt:'1,0 Tage'},
+  T05:{gewerk:'Dach & Abdichtung', firma:'Dachtechnik Iller GmbH', person:'Stefan Brenner', mail:'info@dachtechnik-iller.example', tel:'0831 5208870', vertrag:'BGB', abnahme:'2026-05-28', ende:'2031-05-28', sich:'Bürgschaft 5 % · 12.800 €', reakt:'—'},
+  T06:{gewerk:'Estrich', firma:'Estrichbau Mayr', person:'Josef Mayr', mail:'mayr@estrichbau-mayr.example', tel:'08331 48812', vertrag:'VOB/B', abnahme:'2026-04-30', ende:'2030-04-30', sich:'Einbehalt 5 % · 6.300 €', reakt:'—'},
+  T07:{gewerk:'Fliesen & Bad-Abdichtung', firma:'Fliesen Bader GmbH', person:'Andreas Bader', mail:'auftrag@fliesen-bader.example', tel:'0831 13377', vertrag:'VOB/B', abnahme:'2026-06-12', ende:'2030-06-12', sich:'Bürgschaft 5 % · 9.900 €', reakt:'3,0 Tage'},
+  T08:{gewerk:'Maler & Trockenbau', firma:'Malerwerkstätte Huber', person:'Sabrina Huber', mail:'info@maler-huber.example', tel:'0831 22095', vertrag:'VOB/B', abnahme:'2026-07-01', ende:'2030-07-01', sich:'Einbehalt 5 % · 7.400 €', reakt:'2,5 Tage'},
+  T09:{gewerk:'Innentüren & Schreiner', firma:'Schreinerei Wengert', person:'Peter Wengert', mail:'werkstatt@schreinerei-wengert.example', tel:'08379 7102', vertrag:'BGB', abnahme:'2026-07-08', ende:'2031-07-08', sich:'Einbehalt 5 % · 8.100 €', reakt:'1,8 Tage'},
+  T10:{gewerk:'Tiefgaragentor', firma:'Torsysteme Allgäu GmbH', person:'Kerstin Fendt', mail:'service@torsysteme-allgaeu.example', tel:'0831 9606600', vertrag:'VOB/B', abnahme:'2026-06-30', ende:'2030-06-30', sich:'Bürgschaft 5 % · 3.600 €', reakt:'9,5 Tage'},
+  T11:{gewerk:'Außenanlagen', firma:'GaLaBau Rottach', person:'Michael Rottach', mail:'post@galabau-rottach.example', tel:'0831 590011', vertrag:'VOB/B', abnahme:'2026-09-30', ende:'2030-09-30', sich:'Bürgschaft 5 % · 11.200 €', reakt:'—'}
+};
+
+const STAGES = ['Eingang','Bestätigt','Stufe 1 · Rüge','Stufe 2 · Nachfrist','Stufe 3 · Bauträger','Erledigt gemeldet','Freigabe Eigentümer','Abgeschlossen'];
+const ST = {
+  neu:['KI-Entwurf prüfen','p-neu'], pruefung:['In Prüfung','p-pruefung'], frist:['Frist läuft','p-frist'],
+  einschreiben:['Nachfrist · Einschreiben','p-einschreiben'], termin:['Termin vereinbart','p-termin'],
+  freigabe:['Wartet auf Eigentümer','p-freigabe'], bautraeger:['Beim Bauträger','p-bautraeger'],
+  abgelehnt:['Ablehnung in Freigabe','p-abgelehnt'], geschlossen:['Abgeschlossen','p-geschlossen']
+};
+
+const TICKETS = [
+ {id:'GW-0023', titel:'Heizkörper im Kinderzimmer bleibt kalt', einheit:'Haus C · WE 52 · 3. OG', eig:'SE', gw:'T03', stage:0, st:'neu', frist:null, bearb:'NK', prio:'', eingang:'2026-11-18', via:'Formular',
+  melder:['Sabine Moll'], mieter:'—',
+  ki:{kat:'Heizung · Heizkörper', vor:[['T03',91],['T02',6]], verdict:['Wahrscheinlich Gewährleistungsmangel','v-ok'],
+    begr:'Ein einzelner Heizkörper bleibt kalt, die übrigen Räume sind warm. Typische Ursachen sind Luft im Heizkörper, eine falsche Voreinstellung am Ventil oder ein fehlender hydraulischer Abgleich. Das fällt in die Leistung des Heizungsbauers.',
+    fehlt:['Foto vom Thermostatkopf mit Voreinstellung','Seit wann tritt es auf?'], dring:'Mittel · Heizperiode, Kinderzimmer'},
+  conv:{eig:[{d:'in',who:'Sabine Moll',at:'18.11. 08:42',via:'Formular',t:'Der Heizkörper im Kinderzimmer wird nicht warm, auch wenn das Thermostat auf 5 steht. Die anderen Räume sind in Ordnung.',a:'2 Fotos'}],gw:[],bt:[],int:[]},
+  docs:[['Heizkörper Kinderzimmer','Foto · Eigentümer'],['Thermostat','Foto · Eigentümer']],
+  log:[['18.11. 08:42','System','Meldung über Formular eingegangen'],['18.11. 08:42','KI','Einordnung erstellt: Heizung & Lüftung (91 %)'],['18.11. 08:43','System','Automatisch zugewiesen an Niko (verfügbar, geringste Auslastung)']]},
+
+ {id:'GW-0012', titel:'Rollladen im Schlafzimmer klemmt auf halber Höhe', einheit:'Haus C · WE 46 · 1. OG', eig:'SE', gw:'T01', stage:2, st:'frist', frist:'2026-11-19', bearb:'ED', prio:'', eingang:'2026-11-03', via:'E-Mail (weitergeleitet)',
+  melder:['Helmut Bräckle'], mieter:'Vermietet · Familie Kaya',
+  conv:{eig:[{d:'in',who:'Helmut Bräckle',at:'03.11. 19:10',via:'E-Mail',t:'Der Rollladen im Schlafzimmer meiner vermieteten Wohnung bleibt auf halber Höhe stehen. Mieter: Familie Kaya, Tel. auf Anfrage.'},{d:'out',who:'Emre Doganer',at:'04.11. 18:05',via:'E-Mail',t:'Eingangsbestätigung zu GW-0012 versendet.'}],
+    gw:[{d:'out',who:'Emre Doganer',at:'04.11. 18:12',via:'E-Mail · Stufe 1',t:'Mängelrüge mit Frist bis 19.11.2026 versendet.',a:'Mängelrüge_GW-0012.pdf'}],bt:[],int:[{d:'sys',t:'Keine Rückmeldung der Firma seit 14 Tagen. Erinnerung empfohlen.'}]},
+  docs:[['Rollladen','Foto · Eigentümer'],['Mängelrüge_GW-0012.pdf','PDF · versendet 04.11.']],
+  log:[['03.11. 19:10','System','E-Mail über Bauträger-Postfach eingegangen (Eingang Bauträger 03.11.)'],['04.11. 18:05','Emre','Eingangsbestätigung versendet'],['04.11. 18:12','Emre','Stufe 1: Mängelrüge per E-Mail, Frist 19.11.']]},
+
+ {id:'GW-0007', titel:'Tiefgaragentor schließt nicht vollständig', einheit:'Tiefgarage · Einfahrt Nord', eig:'GE', gw:'T10', stage:3, st:'einschreiben', frist:'2026-11-26', bearb:'ED', prio:'Hoch', eingang:'2026-11-02', via:'Formular (4 Meldungen)',
+  melder:['Familie Özdemir (WE 03)','Markus Hiemer (WE 17)','Anna Zettler (WE 19)','Dr. Petra Lang (WE 31)'], mieter:'Gemeinschaftseigentum',
+  conv:{eig:[{d:'in',who:'Familie Özdemir',at:'02.11. 07:55',via:'Formular',t:'Das Tor bleibt etwa 40 cm offen stehen und fährt dann wieder hoch.'},{d:'sys',t:'3 weitere Meldungen zum selben Mangel automatisch zu diesem Sammelvorgang zusammengeführt (WE 17, 19, 31).'},{d:'out',who:'Emre Doganer',at:'02.11. 18:30',via:'E-Mail an 4 Melder',t:'Eingangsbestätigung und Hinweis auf Sammelvorgang versendet.'}],
+    gw:[{d:'out',who:'Emre Doganer',at:'03.11. 10:02',via:'E-Mail · Stufe 1',t:'Mängelrüge mit Frist bis 10.11.2026 (Sicherheitsrelevanz, verkürzte Frist).',a:'Mängelrüge_GW-0007.pdf'},{d:'out',who:'System',at:'11.11. 08:00',via:'Erinnerung',t:'Frist abgelaufen, automatische Erinnerung an Firma.'},{d:'out',who:'Niko Krnic',at:'12.11. 09:14',via:'Einwurf-Einschreiben (LetterXpress)',t:'Nachfrist bis 26.11.2026 mit Androhung der Ersatzvornahme.',a:'Nachfrist_GW-0007.pdf'},{d:'in',who:'Kerstin Fendt · Torsysteme Allgäu',at:'17.11. 11:40',via:'E-Mail',t:'Ersatzteil (Lichtschranke) ist bestellt. Wir melden uns mit einem Termin in KW 48.'}],
+    bt:[{d:'out',who:'Niko Krnic',at:'12.11. 09:20',via:'E-Mail',t:'Info an Bauträger: Nachfrist gesetzt, Bürgschaft 3.600 € vorhanden.'}],int:[{d:'in',who:'Niko Krnic',at:'12.11. 09:16',via:'Notiz',t:'Sendungsnummer RT 4418 2093 1DE · Zustellung 13.11. bestätigt.'}]},
+  docs:[['Tor offen','Foto · WE 03'],['Tor Video-Standbild','Foto · WE 17'],['Mängelrüge_GW-0007.pdf','PDF · 03.11.'],['Nachfrist_GW-0007.pdf','PDF · Einschreiben'],['Zustellnachweis','PDF · LetterXpress']],
+  log:[['02.11. 07:55','System','Meldung über Formular eingegangen'],['02.11. 12:31','KI','Duplikat erkannt, Sammelvorgang angelegt (4 Melder)'],['03.11. 10:02','Emre','Stufe 1: Mängelrüge per E-Mail, Frist 10.11.'],['11.11. 08:00','System','Frist überschritten, Erinnerung versendet'],['12.11. 09:14','Niko','Stufe 2: Nachfrist per Einwurf-Einschreiben, Frist 26.11.'],['13.11. 10:41','LetterXpress','Zustellung bestätigt'],['17.11. 11:40','System','Antwort der Firma dem Vorgang zugeordnet (Betreff-Kennung)']]},
+
+ {id:'GW-0011', titel:'Fenster im Wohnzimmer zieht, Dichtung lose', einheit:'Haus A · WE 12 · 2. OG', eig:'SE', gw:'T01', stage:2, st:'frist', frist:'2026-11-24', bearb:'NK', prio:'', eingang:'2026-11-05', via:'Formular',
+  melder:['Markus Hiemer'], mieter:'—',
+  conv:{eig:[{d:'in',who:'Markus Hiemer',at:'05.11. 21:14',via:'Formular',t:'Am großen Wohnzimmerfenster löst sich die Dichtung oben links. Es zieht deutlich.'}],gw:[{d:'out',who:'Niko Krnic',at:'06.11. 09:10',via:'E-Mail · Stufe 1',t:'Mängelrüge mit Frist bis 24.11.2026.',a:'Mängelrüge_GW-0011.pdf'},{d:'in',who:'Thomas Kraus',at:'07.11. 08:20',via:'Firmen-Link',t:'Termin vorgeschlagen: 21.11. 10:00 oder 23.11. 14:00.'}],bt:[],int:[]},
+  docs:[['Dichtung Fenster','Foto · Eigentümer']],
+  log:[['05.11. 21:14','System','Meldung über Formular eingegangen'],['06.11. 09:10','Niko','Stufe 1: Mängelrüge per E-Mail, Frist 24.11.'],['07.11. 08:20','Firma','Terminvorschläge über Firmen-Link']]},
+
+ {id:'GW-0014', titel:'Feuchter Fleck an der Badezimmerdecke', einheit:'Haus B · WE 21 · 1. OG', eig:'SE', gw:'T02', stage:1, st:'pruefung', frist:'2026-11-20', bearb:'NK', prio:'Dringend', eingang:'2026-11-12', via:'Formular',
+  melder:['Anna & Tobias Zettler'], mieter:'—',
+  ki:{kat:'Feuchtigkeit · Decke Bad', vor:[['T02',58],['T07',34],['T05',4]], verdict:['Zuständigkeit unklar · Ortstermin empfohlen','v-mix'],
+    begr:'Ein Fleck an der Badezimmerdecke unter einer Wohnung mit Bad (WE 31) deutet auf eine Undichtigkeit der Leitungen oder der Abdichtung unter der Dusche hin. Beides ist möglich. Wasserschaden kann sich ausbreiten.',
+    fehlt:['Wächst der Fleck?','Zugang zu WE 31 klären'], dring:'Hoch · möglicher Folgeschaden'},
+  conv:{eig:[{d:'in',who:'Anna Zettler',at:'12.11. 17:02',via:'Formular',t:'An der Decke über der Dusche ist ein gelblicher, feuchter Fleck, etwa handgroß. Er ist seit dem Wochenende größer geworden.',a:'3 Fotos'},{d:'out',who:'Niko Krnic',at:'12.11. 17:30',via:'E-Mail',t:'Eingangsbestätigung. Wir klären kurzfristig einen Ortstermin mit der Bauleitung.'}],
+    gw:[],bt:[{d:'out',who:'Niko Krnic',at:'12.11. 17:35',via:'Klärungs-Link',t:'Bitte um technische Einschätzung: Sanitär oder Abdichtung? Ortstermin mit beiden Firmen vorgeschlagen.'},{d:'in',who:'Bauleitung (D. Krnic)',at:'13.11. 07:45',via:'Klärungs-Link',t:'Ortstermin 20.11. 08:00 mit Weixler und Bader. Zugang WE 31 bitte organisieren.'}],
+    int:[{d:'in',who:'Niko Krnic',at:'13.11. 08:10',via:'Telefonnotiz',t:'Dr. Lang (WE 31) telefonisch erreicht, Zugang am 20.11. ab 7:45 bestätigt.'}]},
+  docs:[['Fleck Decke','Foto · Eigentümer'],['Fleck Detail','Foto · Eigentümer'],['Fleck nach 3 Tagen','Foto · Eigentümer']],
+  log:[['12.11. 17:02','System','Meldung eingegangen, Kennzeichen „Dringend“ gesetzt'],['12.11. 17:03','System','Push-Nachricht an Niko'],['12.11. 17:35','Niko','Klärungsanfrage an Bauleitung'],['13.11. 07:45','Bauleitung','Ortstermin 20.11. festgelegt']]},
+
+ {id:'GW-0015', titel:'Riss im Wandputz im Flur', einheit:'Haus A · WE 05 · EG', eig:'SE', gw:'T08', stage:1, st:'pruefung', frist:null, bearb:'ED', prio:'', eingang:'2026-11-14', via:'Formular',
+  melder:['Christine Wolf'], mieter:'—',
+  ki:{kat:'Wand · Riss', vor:[['T08',86],['T06',8]], verdict:['Eher kein Gewährleistungsmangel','v-warn'],
+    begr:'Feine Risse im Putz und an Trockenbaufugen treten im ersten Jahr häufig durch Austrocknung und Setzung auf. Ob ein Mangel vorliegt, hängt von Rissbreite und Verlauf ab. Diese Einschätzung ersetzt keine fachliche Prüfung.',
+    fehlt:['Rissbreite (Foto mit Lineal oder Münze)','Länge und Verlauf'], dring:'Niedrig'},
+  conv:{eig:[{d:'in',who:'Christine Wolf',at:'14.11. 10:20',via:'Formular',t:'Im Flur ist ein Riss von der Türzarge schräg nach oben, ca. 40 cm lang.',a:'1 Foto'}],gw:[],bt:[],int:[]},
+  docs:[['Riss Flur','Foto · Eigentümer']],
+  log:[['14.11. 10:20','System','Meldung über Formular eingegangen'],['14.11. 10:20','KI','Einordnung: Maler & Trockenbau (86 %), eher kein Mangel'],['14.11. 18:02','Emre','Status „In Prüfung“, Rückfrage vorbereitet']]},
+
+ {id:'GW-0016', titel:'Silikonfuge in der Dusche dunkel verfärbt', einheit:'Haus B · WE 33 · 3. OG', eig:'SE', gw:'T07', stage:1, st:'abgelehnt', frist:null, bearb:'NK', prio:'', eingang:'2026-11-09', via:'E-Mail (weitergeleitet)',
+  melder:['Jonas Reiter'], mieter:'—',
+  ki:{kat:'Bad · Silikonfuge', vor:[['T07',95]], verdict:['Wahrscheinlich kein Mangel (Wartungsfuge)','v-warn'],
+    begr:'Dunkle Verfärbungen auf Silikonfugen sind meist Schimmelbefall durch Feuchtigkeit und Lüftung. Silikonfugen sind Wartungsfugen. Kein Hinweis auf Ablösung oder Undichtigkeit in der Meldung.',
+    fehlt:[], dring:'Niedrig'},
+  conv:{eig:[{d:'in',who:'Jonas Reiter',at:'09.11. 20:45',via:'E-Mail',t:'Die Silikonfuge in der Dusche wird schwarz, nach erst vier Monaten.'}],gw:[],bt:[{d:'out',who:'Niko Krnic',at:'10.11. 09:00',via:'Freigabe-Link',t:'Entwurf Ablehnungsschreiben (Wartungsfuge, Pflegehinweise) zur Freigabe vorgelegt.'}],int:[]},
+  docs:[['Fuge Dusche','Foto · Eigentümer'],['Entwurf_Ablehnung_GW-0016.pdf','PDF · Entwurf']],
+  log:[['09.11. 20:45','System','E-Mail eingegangen'],['10.11. 08:50','Niko','KI-Einschätzung geprüft und übernommen'],['10.11. 09:00','Niko','Ablehnung an Bauträger zur Freigabe']]},
+
+ {id:'GW-0018', titel:'Wohnungstür schleift am Boden', einheit:'Haus C · WE 40 · EG', eig:'SE', gw:'T09', stage:2, st:'termin', frist:'2026-11-27', bearb:'ED', prio:'', eingang:'2026-11-10', via:'Formular',
+  melder:['Familie Schmid'], mieter:'—', termin:'20.11. 09:00',
+  conv:{eig:[{d:'in',who:'Familie Schmid',at:'10.11. 12:00',via:'Formular',t:'Die Wohnungseingangstür schleift unten und lässt sich schwer schließen.'},{d:'out',who:'System',at:'14.11. 08:00',via:'E-Mail',t:'Termin bestätigt: 20.11. 09:00, Schreinerei Wengert.'}],gw:[{d:'out',who:'Emre Doganer',at:'10.11. 18:20',via:'E-Mail · Stufe 1',t:'Mängelrüge mit Frist bis 27.11.2026.'},{d:'in',who:'Peter Wengert',at:'13.11. 16:05',via:'Firmen-Link',t:'Termin 20.11. 09:00 eingetragen.'}],bt:[],int:[]},
+  docs:[['Tür unten','Foto · Eigentümer']],
+  log:[['10.11. 12:00','System','Meldung eingegangen'],['10.11. 18:20','Emre','Stufe 1: Mängelrüge, Frist 27.11.'],['13.11. 16:05','Firma','Termin über Firmen-Link'],['14.11. 08:00','System','Termin vom Eigentümer bestätigt'],['19.11. 08:00','System','Erinnerung an Firma und Eigentümer geplant']]},
+
+ {id:'GW-0019', titel:'Steckdose in der Küche ohne Funktion', einheit:'Haus A · WE 08 · 1. OG', eig:'SE', gw:'T04', stage:6, skip:[3,4], st:'freigabe', frist:null, bearb:'ED', prio:'', eingang:'2026-11-04', via:'Formular',
+  melder:['Lukas Fink'], mieter:'—',
+  conv:{eig:[{d:'in',who:'Lukas Fink',at:'04.11. 07:30',via:'Formular',t:'Die Doppelsteckdose neben dem Herd hat keinen Strom.'},{d:'out',who:'System',at:'13.11. 16:10',via:'Freigabe-Link',t:'Die Firma hat die Arbeiten als erledigt gemeldet. Bitte bestätigen Sie, ob der Mangel behoben ist.'},{d:'out',who:'System',at:'16.11. 08:00',via:'Erinnerung 1',t:'Erinnerung zur Freigabe.'}],gw:[{d:'out',who:'Emre Doganer',at:'04.11. 18:10',via:'E-Mail · Stufe 1',t:'Mängelrüge mit Frist bis 18.11.2026.'},{d:'in',who:'Florian Gschwend',at:'13.11. 16:08',via:'Firmen-Link',t:'Erledigt: Klemme in der Abzweigdose gelöst, nachgezogen, geprüft.',a:'2 Fotos · Prüfprotokoll'}],bt:[],int:[]},
+  docs:[['Steckdose','Foto · Eigentümer'],['Abzweigdose nachher','Foto · Firma'],['Prüfprotokoll.pdf','PDF · Firma']],
+  log:[['04.11. 07:30','System','Meldung eingegangen'],['04.11. 18:10','Emre','Stufe 1: Mängelrüge, Frist 18.11.'],['13.11. 16:08','Firma','Erledigt gemeldet mit Nachweis'],['13.11. 16:10','System','Freigabe-Link an Eigentümer'],['16.11. 08:00','System','Erinnerung 1 an Eigentümer'],['20.11. 08:00','System','Erinnerung 2 geplant']]},
+
+ {id:'GW-0020', titel:'Lüftungsanlage pfeift nachts im Schlafzimmer', einheit:'Haus B · WE 27 · 2. OG', eig:'SE', gw:'T03', stage:4, st:'bautraeger', frist:null, bearb:'NK', prio:'', eingang:'2026-11-02', via:'Formular',
+  melder:['Sevgi Arslan'], mieter:'—',
+  conv:{eig:[{d:'in',who:'Sevgi Arslan',at:'02.11. 22:40',via:'Formular',t:'Aus dem Lüftungsauslass im Schlafzimmer kommt nachts ein hoher Pfeifton.',a:'Audio 0:12'}],gw:[{d:'out',who:'Niko Krnic',at:'03.11. 09:00',via:'E-Mail · Stufe 1',t:'Mängelrüge mit Frist bis 13.11.'},{d:'out',who:'Niko Krnic',at:'14.11. 08:30',via:'Einwurf-Einschreiben',t:'Nachfrist bis 17.11. mit Androhung der Ersatzvornahme.'},{d:'sys',t:'Keine Reaktion der Firma auf beide Fristen.'}],
+    bt:[{d:'out',who:'Niko Krnic',at:'18.11. 09:05',via:'E-Mail',t:'Übergabe an Bauträger mit vollständiger Akte (14 Seiten). Empfehlung: Ersatzvornahme über Fremdfirma, Kosten gegen Bürgschaft.',a:'Akte_GW-0020.pdf'}],int:[]},
+  docs:[['Auslass Schlafzimmer','Foto · Eigentümer'],['Pfeifton.m4a','Audio · Eigentümer'],['Akte_GW-0020.pdf','PDF · 14 Seiten']],
+  log:[['02.11. 22:40','System','Meldung eingegangen'],['03.11. 09:00','Niko','Stufe 1: Mängelrüge, Frist 13.11.'],['14.11. 08:30','Niko','Stufe 2: Einschreiben, Nachfrist 17.11.'],['15.11. 11:02','LetterXpress','Zustellung bestätigt'],['18.11. 09:05','Niko','Stufe 3: Akte an Bauträger übergeben']]},
+
+ {id:'GW-0010', titel:'Balkonfliese lose', einheit:'Haus A · WE 14 · 2. OG', eig:'SE', gw:'T07', stage:7, skip:[3,4], st:'geschlossen', frist:null, bearb:'ED', prio:'', eingang:'2026-11-02', via:'Formular',
+  melder:['Gerda Nägele'], mieter:'—',
+  conv:{eig:[{d:'in',who:'Gerda Nägele',at:'02.11. 15:00',via:'Formular',t:'Eine Fliese am Balkonrand wackelt.'},{d:'in',who:'Gerda Nägele',at:'12.11. 17:30',via:'Freigabe-Link',t:'Bestätigt: Mangel behoben.',a:'1 Foto'}],gw:[{d:'in',who:'Andreas Bader',at:'11.11. 14:00',via:'Firmen-Link',t:'Erledigt: Fliese neu verlegt.'}],bt:[],int:[]},
+  docs:[['Balkonfliese vorher','Foto'],['Balkonfliese nachher','Foto · Eigentümer']],
+  log:[['02.11. 15:00','System','Meldung eingegangen'],['11.11. 14:00','Firma','Erledigt gemeldet'],['12.11. 17:30','Eigentümer','Freigabe erteilt'],['12.11. 17:30','System','Vorgang abgeschlossen']]}
+];
+
+const MAILS = [
+ {id:'m1', from:'Kerstin Fendt · Torsysteme Allgäu', addr:'service@torsysteme-allgaeu.example', at:'18.11. 13:52', subj:'AW: [GW-0007] Nachfrist Tiefgaragentor', body:'Sehr geehrte Damen und Herren,\n\ndas Ersatzteil ist eingetroffen. Wir kommen am Mittwoch, 25.11., um 8:00 Uhr und tauschen die Lichtschranke. Bitte sorgen Sie dafür, dass die Einfahrt von 8 bis 10 Uhr frei bleibt.\n\nFreundliche Grüße\nKerstin Fendt',
+  ki:{typ:'Antwort Firma', match:['GW-0007',99,'Vorgangsnummer im Betreff'], extra:'Termin erkannt: Mi 25.11. 08:00–10:00 · Aushang für Tiefgarage vorschlagen'}},
+ {id:'m2', from:'Dr. Petra Lang', addr:'p.lang@mail.example', at:'18.11. 11:15', subj:'Wasserfleck beim Nachbarn', body:'Hallo,\n\nich habe gehört, dass es bei Familie Zettler unter mir einen Wasserfleck gibt. Bei mir im Bad ist mir aufgefallen, dass die Fuge am Duschboden an einer Stelle offen ist. Kann das zusammenhängen? Ich bin am 20.11. wie besprochen ab 7:45 zuhause.\n\nViele Grüße\nPetra Lang, WE 31',
+  ki:{typ:'Antwort Eigentümerin, Zusatzinfo', match:['GW-0014',84,'WE 31 liegt über WE 21, Ortstermin 20.11. erwähnt'], extra:'Neuer Hinweis: offene Fuge am Duschboden WE 31 · spricht eher für Fliesen & Bad-Abdichtung'}},
+ {id:'m3', from:'Tobias Zettler', addr:'t.zettler@mail.example', at:'18.11. 09:30', subj:'Zwei Sachen in unserer Wohnung', body:'Guten Morgen,\n\nzwei Dinge: Die Fensterbank im Wohnzimmer hat einen Riss quer über die ganze Tiefe. Außerdem ist der Lüfter im Gäste-WC sehr laut geworden, er rattert.\n\nFotos hängen an.\n\nTobias Zettler, Wohnung 21',
+  att:'3 Fotos', ki:{typ:'Neue Meldung · 2 Mängel', split:[['Fensterbank innen gerissen','T09',72],['Lüfter Gäste-WC rattert','T03',88]], extra:'Einheit WE 21 erkannt · Eigentümer im Stamm vorhanden'}},
+ {id:'m4', from:'Allgäu Wohnbau GmbH', addr:'maengel@allgaeu-wohnbau.example', at:'17.11. 16:40', subj:'Fwd: Mängelanzeige per Post', body:'Per Post eingegangen am 14.11.2026, Scan anbei.\n\n„Das Küchenfenster in Wohnung 60 lässt sich nicht mehr kippen. Der Griff dreht durch.“\nRainer Pfister, Haus C, WE 60',
+  att:'Scan.pdf', ki:{typ:'Neue Meldung · per Post beim Bauträger', match:null, extra:'Maßgebliches Eingangsdatum: 14.11.2026 (Eingang beim Bauträger) · Gewerk-Vorschlag: Fenster & Rollläden (93 %)'}}
+];
+
+const state = {view:'dash', id:null, tab:'eig', filter:'alle', mail:'m1', me:'NK', ownerStep:0, tradeStep:0, toggles:{auto:true, zeiten:true, abw:true, liege:true}};
+const $ = s => document.querySelector(s);
+const T = id => TICKETS.find(t=>t.id===id);
+const open = () => TICKETS.filter(t=>t.st!=='geschlossen');
+
+function toast(msg){ const el=$('#toast'); el.textContent=msg; el.hidden=false; clearTimeout(toast.t); toast.t=setTimeout(()=>el.hidden=true,2600); }
+
+function nav(){
+  const n = [['dash','Übersicht'],['vorgaenge','Vorgänge',open().length],['eingang','Posteingang',MAILS.length,true],['fristen','Fristen',open().filter(t=>t.frist&&days(t.frist)<=7).length],
+    ['sep','Stammdaten'],['gewerke','Gewerke'],['team','Team & Zeiten'],['sep','Externe Ansichten'],['portale','Eigentümer & Firmen']];
+  $('#nav').innerHTML = n.map(([k,l,c,hot])=> k==='sep' ? `<div class="sep">${l}</div>` :
+    `<button data-go="${k}" aria-current="${state.view===k||(k==='vorgaenge'&&state.view==='ticket')}">${l}${c!=null?`<span class="count ${hot?'hot':''}">${c}</span>`:''}</button>`).join('');
+}
+
+function pill(st){ const [l,c]=ST[st]; return `<span class="pill ${c}">${l}</span>`; }
+function dueTxt(f){ if(!f) return '<span class="muted">—</span>'; const n=days(f); const cls = n<0?'crit':n<=2?'crit':n<=7?'warn':'';
+  const rel = n<0?`${-n} T. überfällig`: n===0?'heute': n===1?'morgen':`in ${n} T.`; return `<span class="due ${cls}">${fmtS(f)}<br><span style="font-weight:400" class="muted">${rel}</span></span>`; }
+function av(p){ return `<span class="av ${p}" title="${PEOPLE[p].name}">${p}</span>`; }
+
+function header(title, sub, btns=''){ return `<div class="demo"><span class="tag">Prototyp mit Beispieldaten</span><span>Demo-Stand: Mi, 18.11.2026, 14:20</span></div>
+  <div class="ph"><div><h1>${title}</h1>${sub?`<p>${sub}</p>`:''}</div>${btns?`<div class="btns">${btns}</div>`:''}</div>`; }
+
+/* ---------- Übersicht ---------- */
+function vDash(){
+  const o=open(), soon=o.filter(t=>t.frist&&days(t.frist)<=7).sort((a,b)=>D(a.frist)-D(b.frist));
+  const ki=o.filter(t=>t.st==='neu'||t.ki&&t.st==='pruefung').length;
+  const todo=[
+    ['crit','GW-0012','Frist läuft morgen ab','Rollladen WE 46 · keine Rückmeldung der Firma seit 14 Tagen'],
+    ['warn','GW-0014','Ortstermin übermorgen','Feuchtigkeit WE 21 · Hinweis von WE 31 im Posteingang'],
+    ['info','GW-0023','KI-Entwurf prüfen','Heizkörper WE 52 · Eingangsbestätigung und Rüge vorbereitet'],
+    ['acc','eingang','4 Nachrichten im Posteingang','1 Mail mit 2 Mängeln, 1 Meldung per Post über Bauträger'],
+    ['acc','GW-0019','Eigentümer-Freigabe offen','Steckdose WE 08 · Erinnerung 2 geht am 20.11. raus'],
+    ['crit','GW-0020','Beim Bauträger','Lüftung WE 27 · Entscheidung zur Ersatzvornahme ausstehend']];
+  const byG={}; o.forEach(t=>byG[t.gw]=(byG[t.gw]||0)+1);
+  const maxG=Math.max(...Object.values(byG));
+  return header('Guten Tag, Niko','Quartier am Illerpark · 10 offene Vorgänge, 1 davon beim Bauträger',`<button class="btn" data-act="report">Monatsreport Bauträger</button><button class="btn primary" data-go="eingang">Posteingang öffnen</button>`)+
+  `<div class="kpis">
+    <button class="kpi" data-go="vorgaenge"><div class="n">${o.length}</div><div class="l">Offene Vorgänge</div></button>
+    <button class="kpi alert" data-go="fristen"><div class="n">${soon.length}</div><div class="l">Fristen in 7 Tagen</div></button>
+    <button class="kpi" data-filter="ki"><div class="n">${ki}</div><div class="l">KI-Einschätzungen zu prüfen</div></button>
+    <button class="kpi" data-filter="extern"><div class="n">${o.filter(t=>t.st==='freigabe'||t.st==='bautraeger'||t.st==='abgelehnt').length}</div><div class="l">Wartet auf Eigentümer/Bauträger</div></button>
+  </div>
+  <div class="grid2"><div>
+    <section class="panel"><div class="panel-h"><h2>Heute erledigen</h2><span class="muted" style="font-size:12px">sortiert nach Risiko</span></div>
+      <div class="todo">${todo.map(([c,id,h,s])=>`<button data-${id==='eingang'?'go':'open'}="${id}"><span class="dot ${c}"></span><span><b>${h}</b><br><span class="muted" style="font-size:12.5px">${s}</span></span><span class="mono muted">${id==='eingang'?'':id}</span></button>`).join('')}</div></section>
+    <section class="panel"><div class="panel-h"><h2>Verjährung je Gewerk</h2><span class="muted" style="font-size:12px">Abnahme bis Ende der Gewährleistung</span></div>${timeline()}</section>
+  </div><div>
+    <section class="panel"><div class="panel-h"><h2>Nächste Fristen</h2><button class="btn sm" data-go="fristen">Alle</button></div>
+      <div class="todo">${soon.map(t=>`<button data-open="${t.id}"><span class="dot ${days(t.frist)<=2?'crit':'warn'}"></span><span><b>${t.titel}</b><br><span class="muted" style="font-size:12.5px">${t.einheit} · ${TRADES[t.gw].firma}</span></span>${dueTxt(t.frist)}</button>`).join('')}</div></section>
+    <section class="panel"><div class="panel-h"><h2>Offen nach Gewerk</h2></div>
+      ${Object.entries(byG).sort((a,b)=>b[1]-a[1]).map(([g,n])=>`<div class="conf" style="grid-template-columns:minmax(0,1fr) 110px 20px"><span>${TRADES[g].gewerk}</span><span class="bar"><b style="width:${n/maxG*100}%"></b></span><span class="mono">${n}</span></div>`).join('')}
+      <p class="note">Ø Reaktionszeit Torsysteme Allgäu: 9,5 Tage. Höchster Wert aller Firmen.</p></section>
+  </div></div>`;
+}
+function timeline(){
+  const s=D('2026-04-01'), e=D('2031-10-01'), span=e-s, pos=d=>((D(d)-s)/span*100).toFixed(2);
+  const rows=Object.values(TRADES).sort((a,b)=>D(a.ende)-D(b.ende));
+  const now=((new Date('2026-11-18T12:00:00')-s)/span*100).toFixed(2);
+  return `<div class="tl">${rows.map(t=>`<div class="tl-row"><span title="${t.firma}">${t.gewerk} <span class="muted">${t.vertrag}</span></span><div class="track"><div class="seg" style="left:${pos(t.abnahme)}%;width:${pos(t.ende)-pos(t.abnahme)}%"></div><div class="today" style="left:${now}%"></div></div></div>`).join('')}
+  <div class="ticks"><span></span><div>${[2027,2028,2029,2030,2031].map(y=>`<span style="left:${pos(y+'-01-01')}%">${y}</span>`).join('')}</div></div></div>
+  <p class="note">Rote Linie = heute. VOB/B-Gewerke enden nach 4 Jahren, BGB-Gewerke nach 5 Jahren. Warnungen 6, 3 und 1 Monat vor Ablauf.</p>`;
+}
+
+/* ---------- Vorgänge ---------- */
+function vList(){
+  const f=state.filter, me=state.me;
+  const fl={alle:t=>true, meine:t=>t.bearb===me, ki:t=>t.st==='neu'||(t.ki&&t.st==='pruefung'), frist:t=>['frist','einschreiben','termin'].includes(t.st), extern:t=>['freigabe','bautraeger','abgelehnt'].includes(t.st), zu:t=>t.st==='geschlossen'};
+  const lab={alle:'Alle offenen',meine:'Meine',ki:'KI prüfen',frist:'Frist läuft',extern:'Wartet auf andere',zu:'Abgeschlossen'};
+  const rows=TICKETS.filter(t=>f==='zu'?t.st==='geschlossen':t.st!=='geschlossen').filter(fl[f]);
+  return header('Vorgänge',`${open().length} offen · Sammelvorgänge und Duplikate werden automatisch zusammengeführt`,`<button class="btn" data-act="newcase">Vorgang manuell anlegen</button>`)+
+  `<div class="chips">${Object.keys(lab).map(k=>`<button class="chip" data-filter="${k}" aria-pressed="${f===k}">${lab[k]}</button>`).join('')}</div>
+  <div class="list"><div class="row head"><span>Nr.</span><span>Mangel · Einheit</span><span>Gewerk</span><span>Status</span><span>Frist</span><span></span></div>
+  ${rows.length?rows.map(t=>`<div class="row" tabindex="0" data-open="${t.id}"><span class="c-id mono">${t.id}${t.prio?` <span class="prio">${t.prio}</span>`:''}</span>
+    <span class="t"><b>${t.titel}</b><span>${t.einheit}${t.melder.length>1?` · ${t.melder.length} Melder`:''}</span></span>
+    <span class="c-gw"><b style="font-weight:500">${TRADES[t.gw].gewerk}</b><br><span class="muted" style="font-size:12px">${TRADES[t.gw].firma}</span></span>
+    <span>${pill(t.st)}</span><span class="c-due">${dueTxt(t.frist)}</span><span class="c-av">${av(t.bearb)}</span></div>`).join(''):`<div class="empty" style="margin:12px">Keine Vorgänge in dieser Ansicht.</div>`}</div>`;
+}
+
+/* ---------- Vorgang ---------- */
+function vTicket(){
+  const t=T(state.id), tr=TRADES[t.gw];
+  const step=STAGES.map((s,i)=>{const cls=(t.skip||[]).includes(i)?'skip':i<t.stage?'done':i===t.stage?(t.st==='geschlossen'?'done':'now'):'';return `<div class="step ${cls}"><i></i>${s}</div>`}).join('');
+  const tabs=[['eig','Eigentümer'],['gw','Firma'],['bt','Bauträger'],['int','Intern & Telefon']];
+  const msgs=t.conv[state.tab]||[];
+  return `<button class="back" data-go="vorgaenge">← Alle Vorgänge</button>
+  <div class="ph" style="margin-bottom:0"><div><div class="mono muted">${t.id} · ${t.eig==='GE'?'Gemeinschaftseigentum':'Sondereigentum'}${t.prio?` · <span class="prio">${t.prio}</span>`:''}</div><h1>${t.titel}</h1><p>${t.einheit} · ${t.melder.join(', ')}</p></div><div class="btns">${pill(t.st)}</div></div>
+  <div class="stepper">${step}</div>
+  <div class="grid-side"><div>
+    ${t.ki?kiCard(t):''}
+    <section class="panel"><div class="tabs" role="tablist">${tabs.map(([k,l])=>`<button class="tab" role="tab" data-tab="${k}" aria-selected="${state.tab===k}">${l} <span class="muted">${(t.conv[k]||[]).length||''}</span></button>`).join('')}</div>
+      <div class="chat">${msgs.length?msgs.map(m=>m.d==='sys'?`<div class="msg sys">${m.t}</div>`:`<div class="msg ${m.d}"><div class="meta"><b>${m.who}</b><span>${m.at}</span><span>${m.via}</span></div><p>${m.t}</p>${m.a?`<span class="att">📎 ${m.a}</span>`:''}</div>`).join(''):`<div class="empty">Noch keine Nachrichten in diesem Gesprächsstrang.</div>`}</div>
+      <p class="note">Jeder Beteiligte hat einen eigenen Gesprächsstrang. Antworten werden über die Vorgangsnummer im Betreff oder per KI-Abgleich zugeordnet.</p></section>
+    <section class="panel"><div class="panel-h"><h2>Dokumente & Fotos</h2><span class="muted" style="font-size:12px">automatisch aus Mails und Links abgelegt</span></div>
+      <div class="docs">${t.docs.map(([n,s])=>`<div class="doc"><div class="img ${/\.pdf|\.m4a/.test(n)?'pdf':''}">${/\.pdf/.test(n)?'PDF':/\.m4a/.test(n)?'AUDIO':'Foto'}</div><div class="cap"><b>${n}</b><span>${s}</span></div></div>`).join('')}</div></section>
+  </div><aside>
+    <section class="panel"><h3 style="margin-bottom:10px">Aktionen</h3><div class="actions">${actions(t)}</div></section>
+    <section class="panel"><h3 style="margin-bottom:10px">Fakten</h3><dl class="facts">
+      <dt>Gewerk</dt><dd>${tr.gewerk}</dd><dt>Firma</dt><dd>${tr.firma}<br><span class="muted mono">${tr.tel}</span></dd>
+      <dt>Vertrag</dt><dd>${tr.vertrag} · GW bis ${fmt(tr.ende)}</dd><dt>Sicherheit</dt><dd>${tr.sich}</dd>
+      <dt>Eingang</dt><dd>${fmt(t.eingang)} · ${t.via}</dd><dt>Frist</dt><dd>${t.frist?fmt(t.frist):'—'}</dd>${t.termin?`<dt>Termin</dt><dd>${t.termin}</dd>`:''}
+      <dt>Nutzer</dt><dd>${t.mieter}</dd><dt>Bearbeiter</dt><dd>${PEOPLE[t.bearb].name}</dd></dl></section>
+    <section class="panel"><h3 style="margin-bottom:6px">Protokoll</h3><ul class="log">${t.log.slice().reverse().map(([a,w,x])=>`<li><time>${a}</time><span><b>${w}</b> · ${x}</span></li>`).join('')}</ul>
+      <p class="note">Unveränderlich. Grundlage für die Akte bei Übergabe an den Bauträger.</p></section>
+  </aside></div>`;
+}
+function kiCard(t){ const k=t.ki;
+  return `<section class="panel ki"><div class="ki-h"><span class="ki-badge">KI</span> Einschätzung zur Meldung <span class="muted" style="font-weight:400;font-size:12px;margin-left:auto">${k.kat}</span></div>
+  <div class="verdict ${k.verdict[1]}">${k.verdict[0]}</div>
+  <p style="margin:0 0 10px">${k.begr}</p>
+  <h3>Gewerk-Vorschlag</h3>${k.vor.map(([g,c])=>`<div class="conf"><span>${TRADES[g].gewerk} · <span class="muted">${TRADES[g].firma}</span></span><span class="bar"><b style="width:${c}%"></b></span><span class="mono">${c} %</span></div>`).join('')}
+  <dl class="facts" style="margin-top:12px"><dt>Dringlichkeit</dt><dd>${k.dring}</dd>${k.fehlt.length?`<dt>Fehlt noch</dt><dd>${k.fehlt.join(' · ')}</dd>`:''}</dl>
+  <div class="btns" style="margin-top:12px">${t.st==='neu'?`<button class="btn primary sm" data-act="bestaetigung">Bestätigung prüfen & senden</button><button class="btn sm" data-act="ruege1">Rüge-Entwurf öffnen</button>`:''}${k.fehlt.length?`<button class="btn sm" data-act="rueckfrage">Rückfrage an Eigentümer</button>`:''}${k.verdict[1]==='v-warn'&&t.st!=='abgelehnt'?`<button class="btn sm" data-act="ablehnung">Ablehnung zur Freigabe</button>`:''}${k.verdict[1]==='v-mix'?`<button class="btn sm" data-act="klaerung">Klärung Bauleitung</button>`:''}</div>
+  <p class="note">Die KI schlägt vor, entscheidet aber nicht. Ablehnungen gehen nur nach Freigabe durch den Bauträger raus.</p></section>`;
+}
+function actions(t){
+  const a=(k,l,s,p)=>`<button class="btn block ${p?'primary':''}" data-act="${k}">${l}${s?`<small>${s}</small>`:''}</button>`;
+  return `<div class="grp">Eigentümer</div>${a('bestaetigung','Eingangsbestätigung','E-Mail',t.stage===0)}${a('rueckfrage','Rückfrage','E-Mail')}${a('freigabelink','Freigabe-Link senden','Link')}
+  <div class="grp">Firma · Eskalation</div>${a('ruege1','Stufe 1 · Mängelrüge','E-Mail + Frist',t.stage===1)}${a('ruege2','Stufe 2 · Nachfrist','Einschreiben',t.st==='frist'&&days(t.frist)<=1)}${a('stufe3','Stufe 3 · An Bauträger','Akte PDF')}
+  <div class="grp">Vorgang</div>${a('notiz','Telefonnotiz','')}${state.me==='NK'?a('zuweisen','Zuweisen',PEOPLE[t.bearb].short):''}${a('schliessen','Abschließen','')}`;
+}
+
+/* ---------- Posteingang ---------- */
+function vInbox(){
+  const m=MAILS.find(x=>x.id===state.mail)||MAILS[0];
+  return header('Posteingang','Weitergeleitet aus maengel@allgaeu-wohnbau.example und gewaehrleistung@hausblick-fn.de')+
+  `<div class="inbox"><div class="list">${MAILS.map(x=>`<button class="mail" data-mail="${x.id}" aria-current="${x.id===m.id}"><div class="from"><span>${x.from}</span><span class="mono">${x.at}</span></div><b>${x.subj}</b><div class="k">${x.ki.match?`→ ${x.ki.match[0]}`:x.ki.split?'Neu · 2 Mängel erkannt':'Neue Meldung'}</div></button>`).join('')}</div>
+  <section class="panel"><div class="muted" style="font-size:12.5px">${m.from} · <span class="mono">${m.addr}</span> · ${m.at}</div><h2 style="font-size:18px;margin-top:4px">${m.subj}</h2>
+    <div class="mailbody">${m.body}</div>${m.att?`<span class="att">📎 ${m.att}</span>`:''}
+    <div class="panel ki" style="margin-top:14px"><div class="ki-h"><span class="ki-badge">KI</span> ${m.ki.typ}</div>
+      ${m.ki.match?`<div class="sugg"><span>Zuordnung zu <b class="mono">${m.ki.match[0]}</b> · ${T(m.ki.match[0]).titel}<br><span class="muted" style="font-size:12.5px">${m.ki.match[2]} · ${m.ki.match[1]} %</span></span><button class="btn primary sm" data-act="assignmail">Zuordnen</button></div>`:''}
+      ${m.ki.split?m.ki.split.map(([l,g,c],i)=>`<div class="sugg"><span><b>Vorgang ${i+1}:</b> ${l}<br><span class="muted" style="font-size:12.5px">${TRADES[g].gewerk} · ${c} %</span></span></div>`).join('')+`<div class="btns" style="margin-top:10px"><button class="btn primary sm" data-act="split">In 2 Vorgänge aufteilen</button><button class="btn sm" data-act="newfrommail">Als 1 Vorgang anlegen</button></div>`:''}
+      ${!m.ki.match&&!m.ki.split?`<div class="btns" style="margin-top:10px"><button class="btn primary sm" data-act="newfrommail">Vorgang anlegen</button></div>`:''}
+      <p class="note">${m.ki.extra}</p></div>
+  </section></div>`;
+}
+
+/* ---------- Fristen ---------- */
+function vDeadlines(){
+  const items=[]; open().forEach(t=>{ if(t.frist) items.push({d:t.frist,t,l:t.st==='einschreiben'?'Nachfrist Stufe 2':t.st==='pruefung'?'Ortstermin':'Mängelbeseitigung'}); });
+  items.push({d:'2026-11-20',t:T('GW-0019'),l:'Erinnerung 2 Freigabe'},{d:'2026-11-25',t:T('GW-0007'),l:'Termin Firma 08:00'},{d:'2026-11-20',t:T('GW-0018'),l:'Termin Firma 09:00'});
+  items.sort((a,b)=>D(a.d)-D(b.d));
+  const wk=d=>{const n=days(d);return n<=4?'Diese Woche':n<=11?'Nächste Woche':'Später'};
+  const groups={}; items.forEach(i=>(groups[wk(i.d)]=groups[wk(i.d)]||[]).push(i));
+  const ver=Object.values(TRADES).map(t=>({t,n:Math.round((D(t.ende)-D('2026-11-18'))/864e5/30.4)})).sort((a,b)=>a.n-b.n);
+  return header('Fristen','Feiertage in Bayern und Postlaufzeit werden bei neuen Fristen berücksichtigt',`<button class="btn" data-act="ical">Kalender abonnieren</button>`)+
+  `<div class="grid2"><div>${Object.entries(groups).map(([g,arr])=>`<div class="week"><h3>${g}</h3><div class="list">${arr.map(i=>`<div class="drow" data-open="${i.t.id}">${dueTxt(i.d)}<span class="mono">${i.t.id}</span><span><b>${i.l}</b><br><span class="muted" style="font-size:12.5px">${i.t.titel} · ${TRADES[i.t.gw].firma}</span></span><span class="c-x">${av(i.t.bearb)}</span></div>`).join('')}</div></div>`).join('')}</div>
+  <div><section class="panel"><div class="panel-h"><h2>Verjährungswarnungen</h2></div>
+    <div class="todo">${ver.slice(0,6).map(v=>`<button data-go="gewerke"><span class="dot ${v.n<=6?'crit':v.n<=12?'warn':'ok'}"></span><span><b>${v.t.gewerk}</b><br><span class="muted" style="font-size:12.5px">${v.t.vertrag} · endet ${fmt(v.t.ende)}</span></span><span class="mono muted">${v.n} Mon.</span></button>`).join('')}</div>
+    <p class="note">Unabhängig von offenen Vorgängen. Vor Ablauf wird eine Gewährleistungsbegehung mit dem Bauträger vorgeschlagen.</p></section></div></div>`;
+}
+
+/* ---------- Gewerke ---------- */
+function vTrades(){
+  return header('Gewerke','11 Firmen mit Vertrags- und Gewährleistungsdaten · Grundlage für KI-Zuordnung und Fristen',`<button class="btn">Gewerk hinzufügen</button>`)+
+  `<div class="list tw"><table><thead><tr><th>Gewerk / Firma</th><th>Kontakt</th><th>Vertrag</th><th>Abnahme</th><th>GW-Ende</th><th>Sicherheit</th><th>Offen</th><th>Ø Reaktion</th></tr></thead><tbody>
+  ${Object.entries(TRADES).map(([k,t])=>{const o=open().filter(x=>x.gw===k).length;return `<tr><td><b>${t.gewerk}</b><span class="sub">${t.firma}</span></td><td>${t.person}<span class="sub mono">${t.mail}</span><span class="sub mono">${t.tel}</span></td><td>${t.vertrag}</td><td class="mono">${fmt(t.abnahme)}</td><td class="mono">${fmt(t.ende)}</td><td>${t.sich}</td><td class="mono">${o||'—'}</td><td class="mono" ${parseFloat(t.reakt)>5?'style="color:var(--crit);font-weight:600"':''}>${t.reakt}</td></tr>`}).join('')}
+  </tbody></table></div><p class="note">Leistungsumfang je Gewerk (Stichworte aus dem Leistungsverzeichnis) wird hinterlegt, damit die KI z. B. „Fensterbank innen“ dem Schreiner statt dem Fensterbauer zuordnet.</p>`;
+}
+
+/* ---------- Team ---------- */
+const SCHED={NK:{1:[8,17],2:[8,17],3:[8,17],4:[8,17],5:[8,14]},ED:{1:[[10,12],[18,20]],2:[[10,12],[18,20]],3:[[10,12],[18,20]],4:[[10,12],[18,20]],5:[[10,12]]},LB:{3:[13,16]}};
+function inSched(p,day,h){const s=SCHED[p][day];if(!s)return false;const rs=Array.isArray(s[0])?s:[s];return rs.some(([a,b])=>h>=a&&h<b);}
+function vTeam(){
+  const hours=[7,8,9,10,11,12,13,14,15,16,17,18,19]; const dn=['Mo','Di','Mi','Do','Fr'];
+  const stat={NK:['Verfügbar','ok','bis 17:00'],ED:['Außerhalb Arbeitszeit','warn','wieder ab 18:00'],LB:['Verfügbar','ok','bis 16:00']};
+  const load={NK:5,ED:5,LB:0};
+  return header('Team & Zeiten','Neue Vorgänge werden nur an Personen zugewiesen, die gerade arbeiten und nicht abwesend sind',`<button class="btn">Person einladen</button>`)+
+  `<div class="team">${Object.entries(PEOPLE).map(([k,p])=>`<section class="panel member"><div class="top">${av(k)}<div><b>${p.name}</b><br><span class="muted" style="font-size:12.5px">${p.role}</span></div></div>
+    <span class="state"><span class="dot ${stat[k][1]}"></span>${stat[k][0]} <span class="muted" style="font-weight:400">· ${stat[k][2]}</span></span>
+    <span class="muted" style="font-size:12.5px">${load[k]} offene Vorgänge${k==='LB'?' · Beispiel für spätere Einstellung':''}</span></section>`).join('')}</div>
+  <div class="grid2"><section class="panel"><div class="panel-h"><h2>Arbeitszeiten</h2><span class="muted" style="font-size:12px">rot umrandet = jetzt</span></div>
+    <div class="tw">${Object.keys(PEOPLE).map((p,pi)=>`<div style="margin-bottom:12px"><div style="font-weight:600;margin-bottom:4px">${PEOPLE[p].name}</div><div class="sched"><span></span>${hours.map(h=>`<span class="h">${h}</span>`).join('')}
+      ${dn.map((d,di)=>`<span class="d">${d}</span>${hours.map(h=>`<span class="cell ${inSched(p,di+1,h)?'on p'+(pi+1):''} ${di===2&&h===14?'now':''}"></span>`).join('')}`).join('')}</div></div>`).join('')}</div>
+    <div class="legend"><span><i style="background:var(--accent)"></i>Niko</span><span><i style="background:var(--info)"></i>Emre</span><span><i style="background:var(--warn)"></i>Lena (nur Mi 13–16 Uhr)</span></div></section>
+  <div><section class="panel"><div class="panel-h"><h2>Abwesenheiten</h2><button class="btn sm" data-act="abwesenheit">Eintragen</button></div>
+    <div class="todo"><button><span class="dot warn"></span><span><b>Emre · Di, 24.11.</b><br><span class="muted" style="font-size:12.5px">ganztägig · Vorgänge bleiben bei ihm, Fristen gehen an Niko</span></span><span></span></button>
+    <button><span class="dot info"></span><span><b>Niko · 22.–31.12.</b><br><span class="muted" style="font-size:12.5px">Urlaub · Vertretung Emre</span></span><span></span></button></div></section>
+  <section class="panel"><h2 style="margin-bottom:6px">Zuweisungsregeln</h2>
+    ${[['auto','Neue Vorgänge automatisch zuweisen','nach geringster Auslastung'],['zeiten','Nur während Arbeitszeit zuweisen','sonst an Admin'],['abw','Abwesenheiten berücksichtigen','Fristen gehen an Vertretung'],['liege','Liegezeit-Alarm nach 24 Std.','unbearbeitet zurück an Admin']].map(([k,l,s])=>`<div class="toggle"><span>${l}<br><span class="muted" style="font-size:12.5px">${s}</span></span><button class="sw" role="switch" aria-label="${l}" aria-checked="${state.toggles[k]}" data-sw="${k}"></button></div>`).join('')}</section></div></div>`;
+}
+
+/* ---------- Portale ---------- */
+function vPortals(){
+  const o=state.ownerStep, f=state.tradeStep;
+  const owner= o===0?`<div class="pcard"><b>Die Firma hat die Arbeiten als erledigt gemeldet.</b><p class="muted" style="margin:6px 0 10px;font-size:13px">Elektro Gschwend & Söhne, 13.11.2026: Klemme in der Abzweigdose gelöst und geprüft.</p><div class="docs" style="grid-template-columns:repeat(2,1fr)"><div class="doc"><div class="img">Foto</div></div><div class="doc"><div class="img pdf">PDF</div></div></div></div>
+      <div class="pcard"><b>Ist der Mangel behoben?</b><div style="display:flex;flex-direction:column;gap:8px;margin-top:10px"><button class="btn primary big" data-own="1">Ja, alles in Ordnung</button><button class="btn big" data-own="2">Nein, besteht weiterhin</button></div></div>`
+    : o===1?`<div class="pcard"><b>Vielen Dank.</b><p class="muted" style="margin:6px 0 0;font-size:13px">Der Vorgang GW-0019 ist abgeschlossen. Wir haben Ihre Bestätigung gespeichert.</p></div><button class="btn" data-own="0">Zurücksetzen</button>`
+    : `<div class="pcard"><b>Was ist noch nicht in Ordnung?</b><textarea id="own-txt" style="min-height:90px;margin-top:8px" aria-label="Beschreibung">Die Steckdose funktioniert wieder, aber die Abdeckung sitzt schief.</textarea>
+       <label class="upload" style="margin-top:8px">📷 Foto aufnehmen oder hochladen<input type="file" accept="image/*" capture="environment" id="own-file"></label>
+       <button class="btn primary big" style="margin-top:8px" data-own="3">Rückmeldung senden</button></div>`;
+  const ownerDone = o===3?`<div class="pcard"><b>Rückmeldung gesendet.</b><p class="muted" style="margin:6px 0 0;font-size:13px">Die Firma wird erneut beauftragt. Sie erhalten eine Nachricht mit dem neuen Termin.</p></div><button class="btn" data-own="0">Zurücksetzen</button>`:'';
+  const trade = f===0?`<div class="pcard"><b>Termin vorschlagen</b><div style="display:flex;flex-direction:column;gap:6px;margin-top:8px"><input type="text" id="tv1" value="Sa, 21.11.2026 · 10:00" aria-label="Termin 1"><input type="text" id="tv2" value="Mo, 23.11.2026 · 14:00" aria-label="Termin 2"></div><button class="btn primary big" style="margin-top:8px" data-tr="1">Termine an Eigentümer senden</button></div>
+      <div class="pcard"><b>Arbeiten erledigt</b><label class="upload" style="margin-top:8px">📷 Nachweisfotos hochladen<input type="file" accept="image/*" multiple id="tr-file"></label><button class="btn big" style="margin-top:8px" data-tr="2">Als erledigt melden</button></div>
+      <div class="pcard"><b>Mangel oder Zuständigkeit bestreiten</b><p class="muted" style="font-size:12.5px;margin:4px 0 8px">Mit Begründung. Die Entscheidung trifft der Bauträger.</p><button class="btn danger big" data-tr="3">Begründung eingeben</button></div>`
+    : `<div class="pcard"><b>${f===1?'Terminvorschläge gesendet.':f===2?'Erledigung gemeldet.':'Begründung angefordert.'}</b><p class="muted" style="margin:6px 0 0;font-size:13px">${f===1?'Der Eigentümer wählt einen Termin. Sie erhalten die Bestätigung per E-Mail.':f===2?'Der Eigentümer wird um Freigabe gebeten. Ihre Fotos sind im Vorgang abgelegt.':'Ihre Stellungnahme wird dem Bauträger zur Entscheidung vorgelegt.'}</p></div><button class="btn" data-tr="0">Zurücksetzen</button>`;
+  return header('Eigentümer & Firmen','So sehen die Links ohne Login aus, die per E-Mail verschickt werden')+
+  `<div class="portals"><div><div class="phone"><div class="bar-top"><span>gewaehrleistung.hausblick-fn.de</span><span>🔒</span></div><div class="pscreen">
+    <div><div class="mono muted" style="font-size:11px">GW-0019 · Haus A · WE 08</div><div class="ptitle">Steckdose in der Küche ohne Funktion</div></div>
+    <div class="pcard"><ul class="vsteps"><li><span class="dot ok"></span><span>Meldung eingegangen · 04.11.</span></li><li><span class="dot ok"></span><span>An Elektro Gschwend & Söhne weitergeleitet · 04.11.</span></li><li><span class="dot ok"></span><span>Arbeiten erledigt gemeldet · 13.11.</span></li><li><span class="dot ${o===1?'ok':'acc'}"></span><span><b>${o===1?'Von Ihnen bestätigt':'Ihre Bestätigung'}</b></span></li></ul></div>
+    ${o===3?ownerDone:owner}
+    <div class="muted" style="font-size:11px;text-align:center">HB Verwaltung im Auftrag der Allgäu Wohnbau GmbH</div></div></div><p class="caption">Eigentümer-Link · Freigabe der Leistung</p></div>
+  <div><div class="phone"><div class="bar-top"><span>gewaehrleistung.hausblick-fn.de</span><span>🔒</span></div><div class="pscreen">
+    <div><div class="mono muted" style="font-size:11px">GW-0011 · Mängelrüge vom 06.11.2026</div><div class="ptitle">Fenster im Wohnzimmer zieht, Dichtung lose</div></div>
+    <div class="pcard" style="font-size:13px"><dl class="facts"><dt>Ort</dt><dd>Haus A · WE 12 · 2. OG</dd><dt>Frist</dt><dd>24.11.2026</dd><dt>Kontakt</dt><dd>über diesen Link</dd></dl></div>
+    ${trade}<div class="muted" style="font-size:11px;text-align:center">HB Verwaltung im Auftrag der Allgäu Wohnbau GmbH</div></div></div><p class="caption">Firmen-Link · Termin, Erledigung, Widerspruch</p></div></div>`;
+}
+
+/* ---------- Dialoge ---------- */
+const VERM='HB Verwaltung, im Auftrag und in Vollmacht der Allgäu Wohnbau GmbH';
+function compose(kind){
+  const t=state.id?T(state.id):null, tr=t?TRADES[t.gw]:null;
+  let title,to,via,body,frist=null,hint='',extra='';
+  if(kind==='bestaetigung'){title='Eingangsbestätigung';to=t.melder.join(', ');via='E-Mail';
+    body=`Guten Tag,\n\nvielen Dank für Ihre Meldung vom ${fmt(t.eingang)} zu „${t.titel}“ (${t.einheit}).\n\nWir haben den Vorgang unter der Nummer ${t.id} erfasst und an das zuständige Unternehmen weitergegeben. Sobald ein Termin feststeht, melden wir uns bei Ihnen. Bitte geben Sie bei Rückfragen immer die Vorgangsnummer an.\n\nMit freundlichen Grüßen\n${VERM}`;}
+  if(kind==='rueckfrage'){title='Rückfrage an Eigentümer';to=t.melder[0];via='E-Mail';
+    body=`Guten Tag,\n\nzu Ihrer Meldung ${t.id} („${t.titel}“) benötigen wir noch folgende Angaben:\n\n${(t.ki?t.ki.fehlt:['Ein aktuelles Foto']).map(x=>'– '+x).join('\n')}\n\nSie können Fotos direkt über diesen Link hochladen: gewaehrleistung.hausblick-fn.de/m/${t.id}\n\nMit freundlichen Grüßen\n${VERM}`;}
+  if(kind==='ruege1'){const fr=fristIn(14);frist=fr;title='Stufe 1 · Mängelrüge';to=`${tr.firma} · ${tr.mail}`;via='E-Mail mit PDF';
+    body=`Mängelanzeige · Bauvorhaben Quartier am Illerpark, Kempten\nVorgang ${t.id} · Vertrag nach ${tr.vertrag}\n\nSehr geehrte Damen und Herren,\n\nim Auftrag und in Vollmacht der Allgäu Wohnbau GmbH zeigen wir folgenden Mangel an Ihrer Leistung (${tr.gewerk}) an:\n\nOrt: ${t.einheit}\nBeschreibung: ${t.titel}\nGemeldet am: ${fmt(t.eingang)}\n\nWir fordern Sie auf, den Mangel bis zum ${fmt(fr.d)} zu beseitigen. Bitte schlagen Sie über den folgenden Link einen Termin vor: gewaehrleistung.hausblick-fn.de/f/${t.id}\n\nMit freundlichen Grüßen\n${VERM}`;
+    hint=tr.vertrag==='VOB/B'?'VOB/B-Vertrag: Rüge zusätzlich als unterschriebenes PDF anhängen. Ohne Eingangsbestätigung der Firma nach 3 Tagen folgt automatisch der Hinweis auf Einschreiben.':'BGB-Vertrag: E-Mail ist formal ausreichend. Zugang über Lesebestätigung oder Antwort sichern.';}
+  if(kind==='ruege2'){const fr=fristIn(13);frist=fr;title='Stufe 2 · Nachfrist mit Androhung der Ersatzvornahme';to=`${tr.firma} · Postanschrift`;via='Einwurf-Einschreiben über LetterXpress';
+    body=`Nachfristsetzung · Vorgang ${t.id}\n\nSehr geehrte Damen und Herren,\n\nmit Schreiben vom ${t.log.find(l=>/Stufe 1/.test(l[2]))?.[0]||'—'} haben wir Sie zur Beseitigung des Mangels „${t.titel}“ (${t.einheit}) aufgefordert. Die Frist ist ohne Ergebnis abgelaufen.\n\nWir setzen Ihnen hiermit eine letzte Frist bis zum ${fmt(fr.d)}. Nach fruchtlosem Ablauf wird die Allgäu Wohnbau GmbH den Mangel durch ein anderes Unternehmen auf Ihre Kosten beseitigen lassen und die Kosten mit der vorhandenen Sicherheit (${tr.sich}) verrechnen.\n\nMit freundlichen Grüßen\n${VERM}`;
+    hint='Frist enthält 3 Tage Postlaufzeit. Sendungsnummer und Zustellnachweis werden automatisch im Vorgang abgelegt.';
+    extra=`<div class="row2"><label>Versandart<select id="lx"><option>Einwurf-Einschreiben</option><option>Einschreiben mit Rückschein</option><option>Einschreiben eigenhändig</option></select></label><label>Kopie per E-Mail<select id="lxm"><option>Ja, zusätzlich an ${tr.mail}</option><option>Nein</option></select></label></div>`;}
+  if(kind==='stufe3'){title='Stufe 3 · Übergabe an Bauträger';to='Allgäu Wohnbau GmbH · Projektleitung';via='E-Mail mit Akte';
+    body=`Übergabe Vorgang ${t.id} · ${t.titel}\n\nGuten Tag,\n\ndie gesetzten Fristen sind ohne Ergebnis abgelaufen. Wir übergeben den Vorgang zur weiteren Entscheidung (Ersatzvornahme, Inanspruchnahme der Sicherheit oder rechtliche Schritte).\n\nAnbei die vollständige Akte: Meldung, Fotos, Mängelrüge, Nachfrist, Zustellnachweise, Schriftverkehr und Protokoll.\n\nVorhandene Sicherheit: ${tr.sich}\nGewährleistung ${tr.gewerk} endet am ${fmt(tr.ende)}.\n\nMit freundlichen Grüßen\nHB Verwaltung`;
+    hint=`Akte_${t.id}.pdf wird aus dem Protokoll erzeugt (${t.log.length+t.docs.length} Einträge, chronologisch).`;}
+  if(kind==='ablehnung'){title='Ablehnung zur Freigabe an Bauträger';to='Allgäu Wohnbau GmbH';via='Freigabe-Link';
+    body=`Entwurf an ${t.melder[0]}:\n\nGuten Tag,\n\nwir haben Ihre Meldung ${t.id} geprüft. Nach unserer Einschätzung handelt es sich nicht um einen Gewährleistungsmangel, sondern um ${t.gw==='T07'?'eine Wartungsfuge, die regelmäßig gereinigt und bei Bedarf erneuert werden muss':'ein übliches Erscheinungsbild in der ersten Zeit nach Fertigstellung'}.\n\nFolgende Hinweise helfen: …\n\nMit freundlichen Grüßen\n${VERM}`;
+    hint='Wird erst nach Freigabe durch den Bauträger an den Eigentümer gesendet.';}
+  if(kind==='klaerung'){title='Klärung durch Bauleitung';to='Bauleitung Allgäu Wohnbau';via='Klärungs-Link';
+    body=`Bitte um technische Einschätzung zu ${t.id}: ${t.titel} (${t.einheit}).\n\nKI-Vorschlag: ${t.ki.vor.map(([g,c])=>TRADES[g].gewerk+' '+c+' %').join(', ')}.\nBitte Zuständigkeit festlegen oder Ortstermin vorschlagen.`;}
+  if(kind==='freigabelink'){title='Freigabe-Link an Eigentümer';to=t.melder.join(', ');via='E-Mail mit Link';
+    body=`Guten Tag,\n\ndie Firma hat die Arbeiten zu ${t.id} als erledigt gemeldet. Bitte bestätigen Sie über den folgenden Link, ob der Mangel behoben ist. Dort können Sie auch Fotos hochladen.\n\ngewaehrleistung.hausblick-fn.de/m/${t.id}\n\nOhne Rückmeldung erinnern wir Sie nach 3 und nach 7 Tagen.\n\nMit freundlichen Grüßen\n${VERM}`;}
+  if(kind==='notiz'){title='Telefonnotiz';to='Intern';via='Notiz';body=`Gespräch mit: \nDauer: \nInhalt: `;}
+  const fr=frist?`<div class="hint">Frist: <b>${fmt(frist.d)}</b> (${frist.d.toLocaleDateString('de-DE',{weekday:'long'})})${frist.moved?' · auf nächsten Werktag verschoben':' · kein Feiertag in Bayern'}</div>`:'';
+  $('#dlg').innerHTML=`<form class="dlg" method="dialog" id="cform"><div><div class="mono muted" style="font-size:12px">${t?t.id:''} · ${via}</div><h2 style="font-size:18px">${title}</h2></div>
+    <label>An<input type="text" id="c-to" value="${to}"></label>${extra}
+    <label>Text <span class="ki-badge" style="align-self:flex-start">KI-Entwurf · bitte prüfen</span><textarea id="c-body">${body}</textarea></label>${fr}${hint?`<div class="hint ${kind==='ruege2'?'warn':''}">${hint}</div>`:''}
+    <div class="foot"><button class="btn" type="button" data-close>Abbrechen</button><button class="btn primary" type="submit">${kind==='notiz'?'Speichern':kind==='ruege2'?'Einschreiben beauftragen':'Freigeben & senden'}</button></div></form>`;
+  $('#dlg').showModal();
+  $('#cform').onsubmit=e=>{e.preventDefault(); apply(kind,frist); $('#dlg').close();};
+}
+function apply(kind,frist){
+  const t=T(state.id), who=PEOPLE[state.me].name.split(' ')[0], at='18.11. 14:'+(21+t.log.length);
+  const add=(tab,m)=>t.conv[tab].push(Object.assign({d:'out',who:PEOPLE[state.me].name,at},m));
+  const map={
+    bestaetigung:()=>{add('eig',{via:'E-Mail',t:'Eingangsbestätigung versendet.'});t.log.push([at,who,'Eingangsbestätigung versendet']);if(t.stage<1){t.stage=1;t.st='pruefung'}state.tab='eig';toast('Eingangsbestätigung versendet und protokolliert')},
+    rueckfrage:()=>{add('eig',{via:'E-Mail',t:'Rückfrage mit Upload-Link versendet.'});t.log.push([at,who,'Rückfrage an Eigentümer']);state.tab='eig';toast('Rückfrage versendet')},
+    ruege1:()=>{add('gw',{via:'E-Mail · Stufe 1',t:`Mängelrüge mit Frist bis ${fmt(frist.d)}.`,a:`Mängelrüge_${t.id}.pdf`});t.frist=iso(frist.d);t.stage=2;t.st='frist';t.log.push([at,who,`Stufe 1: Mängelrüge, Frist ${fmt(frist.d)}`]);state.tab='gw';toast('Mängelrüge versendet · Frist im Kalender')},
+    ruege2:()=>{add('gw',{via:'Einwurf-Einschreiben (LetterXpress)',t:`Nachfrist bis ${fmt(frist.d)} mit Androhung der Ersatzvornahme.`,a:`Nachfrist_${t.id}.pdf`});t.frist=iso(frist.d);t.stage=3;t.st='einschreiben';t.log.push([at,who,`Stufe 2: Einschreiben beauftragt, Frist ${fmt(frist.d)}`]);state.tab='gw';toast('An LetterXpress übergeben · Sendungsnummer folgt')},
+    stufe3:()=>{add('bt',{via:'E-Mail',t:'Vorgang mit vollständiger Akte übergeben.',a:`Akte_${t.id}.pdf`});t.stage=4;t.st='bautraeger';t.frist=null;t.log.push([at,who,'Stufe 3: Akte an Bauträger übergeben']);state.tab='bt';toast('Akte erzeugt und an Bauträger gesendet')},
+    ablehnung:()=>{add('bt',{via:'Freigabe-Link',t:'Ablehnung zur Freigabe vorgelegt.'});t.st='abgelehnt';t.log.push([at,who,'Ablehnung an Bauträger zur Freigabe']);state.tab='bt';toast('Zur Freigabe an Bauträger')},
+    klaerung:()=>{add('bt',{via:'Klärungs-Link',t:'Bitte um technische Einschätzung.'});t.log.push([at,who,'Klärungsanfrage an Bauleitung']);state.tab='bt';toast('Klärungsanfrage gesendet')},
+    freigabelink:()=>{add('eig',{via:'Freigabe-Link',t:'Freigabe-Link versendet.'});t.log.push([at,who,'Freigabe-Link an Eigentümer']);state.tab='eig';toast('Freigabe-Link versendet')},
+    notiz:()=>{t.conv.int.push({d:'in',who:PEOPLE[state.me].name,at,via:'Telefonnotiz',t:$('#c-body').value});t.log.push([at,who,'Telefonnotiz erfasst']);state.tab='int';toast('Notiz gespeichert')}
+  }; (map[kind]||(()=>toast('Gespeichert')))(); render();
+}
+function assignDlg(){ const t=T(state.id);
+  $('#dlg').innerHTML=`<form class="dlg" id="aform"><h2 style="font-size:18px">Zuweisen · ${t.id}</h2>
+  ${Object.entries(PEOPLE).map(([k,p])=>`<label style="flex-direction:row;align-items:center;gap:10px;font-size:14px;color:var(--fg)"><input type="radio" name="p" value="${k}" ${t.bearb===k?'checked':''}> ${p.name} <span class="muted" style="font-size:12px">${k==='ED'?'· jetzt außerhalb Arbeitszeit, Benachrichtigung um 18:00':k==='LB'?'· verfügbar bis 16:00':'· verfügbar'}</span></label>`).join('')}
+  <div class="foot"><button class="btn" type="button" data-close>Abbrechen</button><button class="btn primary" type="submit">Zuweisen</button></div></form>`;
+  $('#dlg').showModal();
+  $('#aform').onsubmit=e=>{e.preventDefault();const v=new FormData(e.target).get('p');t.bearb=v;t.log.push(['18.11. 14:30',PEOPLE[state.me].name.split(' ')[0],'Zugewiesen an '+PEOPLE[v].name]);$('#dlg').close();toast('Zugewiesen an '+PEOPLE[v].name);render();};
+}
+function reportDlg(){ const o=open();
+  $('#dlg').innerHTML=`<div class="dlg"><div class="mono muted" style="font-size:12px">Entwurf · Monatsreport November 2026</div><h2 style="font-size:18px">Gewährleistung Quartier am Illerpark</h2>
+  <div class="report"><div><b>${TICKETS.length}</b>Vorgänge gesamt</div><div><b>${o.length}</b>offen</div><div><b>1</b>abgeschlossen</div><div><b>2</b>Einschreiben</div><div><b>1</b>beim Bauträger</div><div><b>3,4 T.</b>Ø Reaktion Firmen</div></div>
+  <div class="hint">Auffällig: Torsysteme Allgäu (Ø 9,5 Tage) und Wärme & Luft Riedle (zwei Fristen verstrichen). Empfehlung: Gespräch mit beiden Firmen.</div>
+  <div class="hint">Zeitaufwand HB im November: 31,5 Std. (Niko 18,0 · Emre 13,5). Grundlage für die Neuverhandlung der Pauschale.</div>
+  <div class="foot"><button class="btn" type="button" data-close>Schließen</button><button class="btn primary" type="button" data-close data-toast="Report als PDF an Bauträger gesendet">Als PDF senden</button></div></div>`;
+  $('#dlg').showModal();
+}
+
+/* ---------- Render & Events ---------- */
+function render(){ nav(); const v={dash:vDash,vorgaenge:vList,ticket:vTicket,eingang:vInbox,fristen:vDeadlines,gewerke:vTrades,team:vTeam,portale:vPortals}[state.view]; $('#main').innerHTML=v(); }
+function go(v){ state.view=v; render(); window.scrollTo({top:0}); }
+document.addEventListener('click',e=>{
+  const g=e.target.closest('[data-go]'); if(g){ go(g.dataset.go); return; }
+  const o=e.target.closest('[data-open]'); if(o){ state.id=o.dataset.open; state.tab='eig'; const t=T(state.id); if(!t.conv.eig.length) state.tab='gw'; go('ticket'); return; }
+  const f=e.target.closest('[data-filter]'); if(f){ state.filter=f.dataset.filter; go('vorgaenge'); return; }
+  const tb=e.target.closest('[data-tab]'); if(tb){ state.tab=tb.dataset.tab; render(); return; }
+  const m=e.target.closest('[data-mail]'); if(m){ state.mail=m.dataset.mail; render(); return; }
+  const sw=e.target.closest('[data-sw]'); if(sw){ state.toggles[sw.dataset.sw]=!state.toggles[sw.dataset.sw]; render(); return; }
+  const ow=e.target.closest('[data-own]'); if(ow){ state.ownerStep=+ow.dataset.own; render(); return; }
+  const tr=e.target.closest('[data-tr]'); if(tr){ state.tradeStep=+tr.dataset.tr; render(); return; }
+  const c=e.target.closest('[data-close]'); if(c){ $('#dlg').close(); if(c.dataset.toast) toast(c.dataset.toast); return; }
+  const a=e.target.closest('[data-act]'); if(!a) return; const k=a.dataset.act;
+  if(['bestaetigung','rueckfrage','ruege1','ruege2','stufe3','ablehnung','klaerung','freigabelink','notiz'].includes(k)) return compose(k);
+  if(k==='zuweisen') return assignDlg();
+  if(k==='report') return reportDlg();
+  if(k==='schliessen'){ const t=T(state.id); t.st='geschlossen'; t.stage=7; t.frist=null; t.log.push(['18.11. 14:40',PEOPLE[state.me].name.split(' ')[0],'Vorgang abgeschlossen']); toast('Vorgang abgeschlossen'); return render(); }
+  const msg={assignmail:'Mail dem Vorgang zugeordnet · Termin übernommen',split:'2 Vorgänge angelegt: GW-0024 und GW-0025',newfrommail:'Vorgang GW-0024 angelegt · KI-Einordnung läuft',newcase:'Formular für neuen Vorgang (im Prototyp nicht ausgebaut)',ical:'Kalender-Link kopiert (Prototyp)',abwesenheit:'Abwesenheit eintragen (im Prototyp nicht ausgebaut)'}[k];
+  if(['assignmail','split','newfrommail'].includes(k)){ MAILS.splice(MAILS.findIndex(x=>x.id===state.mail),1); state.mail=MAILS[0]?.id; }
+  toast(msg||'Erledigt'); render();
+});
+document.addEventListener('keydown',e=>{ if(e.key==='Enter'){ const r=e.target.closest('.row[data-open]'); if(r) r.click(); }});
+$('#role').addEventListener('change',e=>{ state.me=e.target.value; render(); toast('Ansicht als '+PEOPLE[state.me].name); });
+document.addEventListener('change',e=>{ if(e.target.type==='file' && e.target.files.length) toast(e.target.files.length+' Datei(en) ausgewählt'); });
+render();
+</script>
+</body>
+</html>
