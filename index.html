@@ -258,7 +258,7 @@ dialog::backdrop{background:rgba(10,12,8,.5)}
     <div class="obj"><small>Objekt · Bauträger</small><b>Quartier am Illerpark, Kempten</b><div class="muted" style="font-size:12px">Allgäu Wohnbau GmbH · 68 Einheiten</div></div>
     <nav class="nav" id="nav"></nav>
     <div class="who"><label for="role">Angemeldet als</label>
-      <select id="role"><option value="NK">Niko Krnic · Admin</option><option value="ED">Emre Doganer · Bearbeiter</option></select></div>
+      <select id="role"><option value="NK">Niko Krnic · Admin</option><option value="JK">Jonas Keller · Bearbeiter</option></select></div>
   </aside>
   <main id="main"></main>
 </div>
@@ -279,7 +279,7 @@ function fristIn(n){ const d=new Date('2026-11-18T12:00:00'); d.setDate(d.getDat
 
 const PEOPLE = {
   NK:{name:'Niko Krnic', role:'Admin', short:'NK'},
-  ED:{name:'Emre Doganer', role:'Bearbeiter', short:'ED'},
+  JK:{name:'Jonas Keller', role:'Bearbeiter', short:'JK'},
   LB:{name:'Lena Berger', role:'Bearbeiterin · Minijob (Beispiel)', short:'LB'}
 };
 
@@ -315,20 +315,20 @@ const TICKETS = [
   docs:[['Heizkörper Kinderzimmer','Foto · Eigentümer'],['Thermostat','Foto · Eigentümer']],
   log:[['18.11. 08:42','System','Meldung über Formular eingegangen'],['18.11. 08:42','KI','Einordnung erstellt: Heizung & Lüftung (91 %)'],['18.11. 08:43','System','Automatisch zugewiesen an Niko (verfügbar, geringste Auslastung)']]},
 
- {id:'GW-0012', titel:'Rollladen im Schlafzimmer klemmt auf halber Höhe', einheit:'Haus C · WE 46 · 1. OG', eig:'SE', gw:'T01', stage:2, st:'frist', frist:'2026-11-19', bearb:'ED', prio:'', eingang:'2026-11-03', via:'E-Mail (weitergeleitet)',
+ {id:'GW-0012', titel:'Rollladen im Schlafzimmer klemmt auf halber Höhe', einheit:'Haus C · WE 46 · 1. OG', eig:'SE', gw:'T01', stage:2, st:'frist', frist:'2026-11-19', bearb:'JK', prio:'', eingang:'2026-11-03', via:'E-Mail (weitergeleitet)',
   melder:['Helmut Bräckle'], mieter:'Vermietet · Familie Kaya',
-  conv:{eig:[{d:'in',who:'Helmut Bräckle',at:'03.11. 19:10',via:'E-Mail',t:'Der Rollladen im Schlafzimmer meiner vermieteten Wohnung bleibt auf halber Höhe stehen. Mieter: Familie Kaya, Tel. auf Anfrage.'},{d:'out',who:'Emre Doganer',at:'04.11. 18:05',via:'E-Mail',t:'Eingangsbestätigung zu GW-0012 versendet.'}],
-    gw:[{d:'out',who:'Emre Doganer',at:'04.11. 18:12',via:'E-Mail · Stufe 1',t:'Mängelrüge mit Frist bis 19.11.2026 versendet.',a:'Mängelrüge_GW-0012.pdf'}],bt:[],int:[{d:'sys',t:'Keine Rückmeldung der Firma seit 14 Tagen. Erinnerung empfohlen.'}]},
+  conv:{eig:[{d:'in',who:'Helmut Bräckle',at:'03.11. 19:10',via:'E-Mail',t:'Der Rollladen im Schlafzimmer meiner vermieteten Wohnung bleibt auf halber Höhe stehen. Mieter: Familie Kaya, Tel. auf Anfrage.'},{d:'out',who:'Jonas Keller',at:'04.11. 18:05',via:'E-Mail',t:'Eingangsbestätigung zu GW-0012 versendet.'}],
+    gw:[{d:'out',who:'Jonas Keller',at:'04.11. 18:12',via:'E-Mail · Stufe 1',t:'Mängelrüge mit Frist bis 19.11.2026 versendet.',a:'Mängelrüge_GW-0012.pdf'}],bt:[],int:[{d:'sys',t:'Keine Rückmeldung der Firma seit 14 Tagen. Erinnerung empfohlen.'}]},
   docs:[['Rollladen','Foto · Eigentümer'],['Mängelrüge_GW-0012.pdf','PDF · versendet 04.11.']],
-  log:[['03.11. 19:10','System','E-Mail über Bauträger-Postfach eingegangen (Eingang Bauträger 03.11.)'],['04.11. 18:05','Emre','Eingangsbestätigung versendet'],['04.11. 18:12','Emre','Stufe 1: Mängelrüge per E-Mail, Frist 19.11.']]},
+  log:[['03.11. 19:10','System','E-Mail über Bauträger-Postfach eingegangen (Eingang Bauträger 03.11.)'],['04.11. 18:05','Jonas','Eingangsbestätigung versendet'],['04.11. 18:12','Jonas','Stufe 1: Mängelrüge per E-Mail, Frist 19.11.']]},
 
- {id:'GW-0007', titel:'Tiefgaragentor schließt nicht vollständig', einheit:'Tiefgarage · Einfahrt Nord', eig:'GE', gw:'T10', stage:3, st:'einschreiben', frist:'2026-11-26', bearb:'ED', prio:'Hoch', eingang:'2026-11-02', via:'Formular (4 Meldungen)',
+ {id:'GW-0007', titel:'Tiefgaragentor schließt nicht vollständig', einheit:'Tiefgarage · Einfahrt Nord', eig:'GE', gw:'T10', stage:3, st:'einschreiben', frist:'2026-11-26', bearb:'JK', prio:'Hoch', eingang:'2026-11-02', via:'Formular (4 Meldungen)',
   melder:['Familie Özdemir (WE 03)','Markus Hiemer (WE 17)','Anna Zettler (WE 19)','Dr. Petra Lang (WE 31)'], mieter:'Gemeinschaftseigentum',
-  conv:{eig:[{d:'in',who:'Familie Özdemir',at:'02.11. 07:55',via:'Formular',t:'Das Tor bleibt etwa 40 cm offen stehen und fährt dann wieder hoch.'},{d:'sys',t:'3 weitere Meldungen zum selben Mangel automatisch zu diesem Sammelvorgang zusammengeführt (WE 17, 19, 31).'},{d:'out',who:'Emre Doganer',at:'02.11. 18:30',via:'E-Mail an 4 Melder',t:'Eingangsbestätigung und Hinweis auf Sammelvorgang versendet.'}],
-    gw:[{d:'out',who:'Emre Doganer',at:'03.11. 10:02',via:'E-Mail · Stufe 1',t:'Mängelrüge mit Frist bis 10.11.2026 (Sicherheitsrelevanz, verkürzte Frist).',a:'Mängelrüge_GW-0007.pdf'},{d:'out',who:'System',at:'11.11. 08:00',via:'Erinnerung',t:'Frist abgelaufen, automatische Erinnerung an Firma.'},{d:'out',who:'Niko Krnic',at:'12.11. 09:14',via:'Einwurf-Einschreiben (LetterXpress)',t:'Nachfrist bis 26.11.2026 mit Androhung der Ersatzvornahme.',a:'Nachfrist_GW-0007.pdf'},{d:'in',who:'Kerstin Fendt · Torsysteme Allgäu',at:'17.11. 11:40',via:'E-Mail',t:'Ersatzteil (Lichtschranke) ist bestellt. Wir melden uns mit einem Termin in KW 48.'}],
+  conv:{eig:[{d:'in',who:'Familie Özdemir',at:'02.11. 07:55',via:'Formular',t:'Das Tor bleibt etwa 40 cm offen stehen und fährt dann wieder hoch.'},{d:'sys',t:'3 weitere Meldungen zum selben Mangel automatisch zu diesem Sammelvorgang zusammengeführt (WE 17, 19, 31).'},{d:'out',who:'Jonas Keller',at:'02.11. 18:30',via:'E-Mail an 4 Melder',t:'Eingangsbestätigung und Hinweis auf Sammelvorgang versendet.'}],
+    gw:[{d:'out',who:'Jonas Keller',at:'03.11. 10:02',via:'E-Mail · Stufe 1',t:'Mängelrüge mit Frist bis 10.11.2026 (Sicherheitsrelevanz, verkürzte Frist).',a:'Mängelrüge_GW-0007.pdf'},{d:'out',who:'System',at:'11.11. 08:00',via:'Erinnerung',t:'Frist abgelaufen, automatische Erinnerung an Firma.'},{d:'out',who:'Niko Krnic',at:'12.11. 09:14',via:'Einwurf-Einschreiben (LetterXpress)',t:'Nachfrist bis 26.11.2026 mit Androhung der Ersatzvornahme.',a:'Nachfrist_GW-0007.pdf'},{d:'in',who:'Kerstin Fendt · Torsysteme Allgäu',at:'17.11. 11:40',via:'E-Mail',t:'Ersatzteil (Lichtschranke) ist bestellt. Wir melden uns mit einem Termin in KW 48.'}],
     bt:[{d:'out',who:'Niko Krnic',at:'12.11. 09:20',via:'E-Mail',t:'Info an Bauträger: Nachfrist gesetzt, Bürgschaft 3.600 € vorhanden.'}],int:[{d:'in',who:'Niko Krnic',at:'12.11. 09:16',via:'Notiz',t:'Sendungsnummer RT 4418 2093 1DE · Zustellung 13.11. bestätigt.'}]},
   docs:[['Tor offen','Foto · WE 03'],['Tor Video-Standbild','Foto · WE 17'],['Mängelrüge_GW-0007.pdf','PDF · 03.11.'],['Nachfrist_GW-0007.pdf','PDF · Einschreiben'],['Zustellnachweis','PDF · LetterXpress']],
-  log:[['02.11. 07:55','System','Meldung über Formular eingegangen'],['02.11. 12:31','KI','Duplikat erkannt, Sammelvorgang angelegt (4 Melder)'],['03.11. 10:02','Emre','Stufe 1: Mängelrüge per E-Mail, Frist 10.11.'],['11.11. 08:00','System','Frist überschritten, Erinnerung versendet'],['12.11. 09:14','Niko','Stufe 2: Nachfrist per Einwurf-Einschreiben, Frist 26.11.'],['13.11. 10:41','LetterXpress','Zustellung bestätigt'],['17.11. 11:40','System','Antwort der Firma dem Vorgang zugeordnet (Betreff-Kennung)']]},
+  log:[['02.11. 07:55','System','Meldung über Formular eingegangen'],['02.11. 12:31','KI','Duplikat erkannt, Sammelvorgang angelegt (4 Melder)'],['03.11. 10:02','Jonas','Stufe 1: Mängelrüge per E-Mail, Frist 10.11.'],['11.11. 08:00','System','Frist überschritten, Erinnerung versendet'],['12.11. 09:14','Niko','Stufe 2: Nachfrist per Einwurf-Einschreiben, Frist 26.11.'],['13.11. 10:41','LetterXpress','Zustellung bestätigt'],['17.11. 11:40','System','Antwort der Firma dem Vorgang zugeordnet (Betreff-Kennung)']]},
 
  {id:'GW-0011', titel:'Fenster im Wohnzimmer zieht, Dichtung lose', einheit:'Haus A · WE 12 · 2. OG', eig:'SE', gw:'T01', stage:2, st:'frist', frist:'2026-11-24', bearb:'NK', prio:'', eingang:'2026-11-05', via:'Formular',
   melder:['Markus Hiemer'], mieter:'—',
@@ -342,19 +342,19 @@ const TICKETS = [
     begr:'Ein Fleck an der Badezimmerdecke unter einer Wohnung mit Bad (WE 31) deutet auf eine Undichtigkeit der Leitungen oder der Abdichtung unter der Dusche hin. Beides ist möglich. Wasserschaden kann sich ausbreiten.',
     fehlt:['Wächst der Fleck?','Zugang zu WE 31 klären'], dring:'Hoch · möglicher Folgeschaden'},
   conv:{eig:[{d:'in',who:'Anna Zettler',at:'12.11. 17:02',via:'Formular',t:'An der Decke über der Dusche ist ein gelblicher, feuchter Fleck, etwa handgroß. Er ist seit dem Wochenende größer geworden.',a:'3 Fotos'},{d:'out',who:'Niko Krnic',at:'12.11. 17:30',via:'E-Mail',t:'Eingangsbestätigung. Wir klären kurzfristig einen Ortstermin mit der Bauleitung.'}],
-    gw:[],bt:[{d:'out',who:'Niko Krnic',at:'12.11. 17:35',via:'Klärungs-Link',t:'Bitte um technische Einschätzung: Sanitär oder Abdichtung? Ortstermin mit beiden Firmen vorgeschlagen.'},{d:'in',who:'Bauleitung (D. Krnic)',at:'13.11. 07:45',via:'Klärungs-Link',t:'Ortstermin 20.11. 08:00 mit Weixler und Bader. Zugang WE 31 bitte organisieren.'}],
+    gw:[],bt:[{d:'out',who:'Niko Krnic',at:'12.11. 17:35',via:'Klärungs-Link',t:'Bitte um technische Einschätzung: Sanitär oder Abdichtung? Ortstermin mit beiden Firmen vorgeschlagen.'},{d:'in',who:'Bauleitung (S. Hofer)',at:'13.11. 07:45',via:'Klärungs-Link',t:'Ortstermin 20.11. 08:00 mit Weixler und Bader. Zugang WE 31 bitte organisieren.'}],
     int:[{d:'in',who:'Niko Krnic',at:'13.11. 08:10',via:'Telefonnotiz',t:'Dr. Lang (WE 31) telefonisch erreicht, Zugang am 20.11. ab 7:45 bestätigt.'}]},
   docs:[['Fleck Decke','Foto · Eigentümer'],['Fleck Detail','Foto · Eigentümer'],['Fleck nach 3 Tagen','Foto · Eigentümer']],
   log:[['12.11. 17:02','System','Meldung eingegangen, Kennzeichen „Dringend“ gesetzt'],['12.11. 17:03','System','Push-Nachricht an Niko'],['12.11. 17:35','Niko','Klärungsanfrage an Bauleitung'],['13.11. 07:45','Bauleitung','Ortstermin 20.11. festgelegt']]},
 
- {id:'GW-0015', titel:'Riss im Wandputz im Flur', einheit:'Haus A · WE 05 · EG', eig:'SE', gw:'T08', stage:1, st:'pruefung', frist:null, bearb:'ED', prio:'', eingang:'2026-11-14', via:'Formular',
+ {id:'GW-0015', titel:'Riss im Wandputz im Flur', einheit:'Haus A · WE 05 · EG', eig:'SE', gw:'T08', stage:1, st:'pruefung', frist:null, bearb:'JK', prio:'', eingang:'2026-11-14', via:'Formular',
   melder:['Christine Wolf'], mieter:'—',
   ki:{kat:'Wand · Riss', vor:[['T08',86],['T06',8]], verdict:['Eher kein Gewährleistungsmangel','v-warn'],
     begr:'Feine Risse im Putz und an Trockenbaufugen treten im ersten Jahr häufig durch Austrocknung und Setzung auf. Ob ein Mangel vorliegt, hängt von Rissbreite und Verlauf ab. Diese Einschätzung ersetzt keine fachliche Prüfung.',
     fehlt:['Rissbreite (Foto mit Lineal oder Münze)','Länge und Verlauf'], dring:'Niedrig'},
   conv:{eig:[{d:'in',who:'Christine Wolf',at:'14.11. 10:20',via:'Formular',t:'Im Flur ist ein Riss von der Türzarge schräg nach oben, ca. 40 cm lang.',a:'1 Foto'}],gw:[],bt:[],int:[]},
   docs:[['Riss Flur','Foto · Eigentümer']],
-  log:[['14.11. 10:20','System','Meldung über Formular eingegangen'],['14.11. 10:20','KI','Einordnung: Maler & Trockenbau (86 %), eher kein Mangel'],['14.11. 18:02','Emre','Status „In Prüfung“, Rückfrage vorbereitet']]},
+  log:[['14.11. 10:20','System','Meldung über Formular eingegangen'],['14.11. 10:20','KI','Einordnung: Maler & Trockenbau (86 %), eher kein Mangel'],['14.11. 18:02','Jonas','Status „In Prüfung“, Rückfrage vorbereitet']]},
 
  {id:'GW-0016', titel:'Silikonfuge in der Dusche dunkel verfärbt', einheit:'Haus B · WE 33 · 3. OG', eig:'SE', gw:'T07', stage:1, st:'abgelehnt', frist:null, bearb:'NK', prio:'', eingang:'2026-11-09', via:'E-Mail (weitergeleitet)',
   melder:['Jonas Reiter'], mieter:'—',
@@ -365,17 +365,17 @@ const TICKETS = [
   docs:[['Fuge Dusche','Foto · Eigentümer'],['Entwurf_Ablehnung_GW-0016.pdf','PDF · Entwurf']],
   log:[['09.11. 20:45','System','E-Mail eingegangen'],['10.11. 08:50','Niko','KI-Einschätzung geprüft und übernommen'],['10.11. 09:00','Niko','Ablehnung an Bauträger zur Freigabe']]},
 
- {id:'GW-0018', titel:'Wohnungstür schleift am Boden', einheit:'Haus C · WE 40 · EG', eig:'SE', gw:'T09', stage:2, st:'termin', frist:'2026-11-27', bearb:'ED', prio:'', eingang:'2026-11-10', via:'Formular',
+ {id:'GW-0018', titel:'Wohnungstür schleift am Boden', einheit:'Haus C · WE 40 · EG', eig:'SE', gw:'T09', stage:2, st:'termin', frist:'2026-11-27', bearb:'JK', prio:'', eingang:'2026-11-10', via:'Formular',
   melder:['Familie Schmid'], mieter:'—', termin:'20.11. 09:00',
-  conv:{eig:[{d:'in',who:'Familie Schmid',at:'10.11. 12:00',via:'Formular',t:'Die Wohnungseingangstür schleift unten und lässt sich schwer schließen.'},{d:'out',who:'System',at:'14.11. 08:00',via:'E-Mail',t:'Termin bestätigt: 20.11. 09:00, Schreinerei Wengert.'}],gw:[{d:'out',who:'Emre Doganer',at:'10.11. 18:20',via:'E-Mail · Stufe 1',t:'Mängelrüge mit Frist bis 27.11.2026.'},{d:'in',who:'Peter Wengert',at:'13.11. 16:05',via:'Firmen-Link',t:'Termin 20.11. 09:00 eingetragen.'}],bt:[],int:[]},
+  conv:{eig:[{d:'in',who:'Familie Schmid',at:'10.11. 12:00',via:'Formular',t:'Die Wohnungseingangstür schleift unten und lässt sich schwer schließen.'},{d:'out',who:'System',at:'14.11. 08:00',via:'E-Mail',t:'Termin bestätigt: 20.11. 09:00, Schreinerei Wengert.'}],gw:[{d:'out',who:'Jonas Keller',at:'10.11. 18:20',via:'E-Mail · Stufe 1',t:'Mängelrüge mit Frist bis 27.11.2026.'},{d:'in',who:'Peter Wengert',at:'13.11. 16:05',via:'Firmen-Link',t:'Termin 20.11. 09:00 eingetragen.'}],bt:[],int:[]},
   docs:[['Tür unten','Foto · Eigentümer']],
-  log:[['10.11. 12:00','System','Meldung eingegangen'],['10.11. 18:20','Emre','Stufe 1: Mängelrüge, Frist 27.11.'],['13.11. 16:05','Firma','Termin über Firmen-Link'],['14.11. 08:00','System','Termin vom Eigentümer bestätigt'],['19.11. 08:00','System','Erinnerung an Firma und Eigentümer geplant']]},
+  log:[['10.11. 12:00','System','Meldung eingegangen'],['10.11. 18:20','Jonas','Stufe 1: Mängelrüge, Frist 27.11.'],['13.11. 16:05','Firma','Termin über Firmen-Link'],['14.11. 08:00','System','Termin vom Eigentümer bestätigt'],['19.11. 08:00','System','Erinnerung an Firma und Eigentümer geplant']]},
 
- {id:'GW-0019', titel:'Steckdose in der Küche ohne Funktion', einheit:'Haus A · WE 08 · 1. OG', eig:'SE', gw:'T04', stage:6, skip:[3,4], st:'freigabe', frist:null, bearb:'ED', prio:'', eingang:'2026-11-04', via:'Formular',
+ {id:'GW-0019', titel:'Steckdose in der Küche ohne Funktion', einheit:'Haus A · WE 08 · 1. OG', eig:'SE', gw:'T04', stage:6, skip:[3,4], st:'freigabe', frist:null, bearb:'JK', prio:'', eingang:'2026-11-04', via:'Formular',
   melder:['Lukas Fink'], mieter:'—',
-  conv:{eig:[{d:'in',who:'Lukas Fink',at:'04.11. 07:30',via:'Formular',t:'Die Doppelsteckdose neben dem Herd hat keinen Strom.'},{d:'out',who:'System',at:'13.11. 16:10',via:'Freigabe-Link',t:'Die Firma hat die Arbeiten als erledigt gemeldet. Bitte bestätigen Sie, ob der Mangel behoben ist.'},{d:'out',who:'System',at:'16.11. 08:00',via:'Erinnerung 1',t:'Erinnerung zur Freigabe.'}],gw:[{d:'out',who:'Emre Doganer',at:'04.11. 18:10',via:'E-Mail · Stufe 1',t:'Mängelrüge mit Frist bis 18.11.2026.'},{d:'in',who:'Florian Gschwend',at:'13.11. 16:08',via:'Firmen-Link',t:'Erledigt: Klemme in der Abzweigdose gelöst, nachgezogen, geprüft.',a:'2 Fotos · Prüfprotokoll'}],bt:[],int:[]},
+  conv:{eig:[{d:'in',who:'Lukas Fink',at:'04.11. 07:30',via:'Formular',t:'Die Doppelsteckdose neben dem Herd hat keinen Strom.'},{d:'out',who:'System',at:'13.11. 16:10',via:'Freigabe-Link',t:'Die Firma hat die Arbeiten als erledigt gemeldet. Bitte bestätigen Sie, ob der Mangel behoben ist.'},{d:'out',who:'System',at:'16.11. 08:00',via:'Erinnerung 1',t:'Erinnerung zur Freigabe.'}],gw:[{d:'out',who:'Jonas Keller',at:'04.11. 18:10',via:'E-Mail · Stufe 1',t:'Mängelrüge mit Frist bis 18.11.2026.'},{d:'in',who:'Florian Gschwend',at:'13.11. 16:08',via:'Firmen-Link',t:'Erledigt: Klemme in der Abzweigdose gelöst, nachgezogen, geprüft.',a:'2 Fotos · Prüfprotokoll'}],bt:[],int:[]},
   docs:[['Steckdose','Foto · Eigentümer'],['Abzweigdose nachher','Foto · Firma'],['Prüfprotokoll.pdf','PDF · Firma']],
-  log:[['04.11. 07:30','System','Meldung eingegangen'],['04.11. 18:10','Emre','Stufe 1: Mängelrüge, Frist 18.11.'],['13.11. 16:08','Firma','Erledigt gemeldet mit Nachweis'],['13.11. 16:10','System','Freigabe-Link an Eigentümer'],['16.11. 08:00','System','Erinnerung 1 an Eigentümer'],['20.11. 08:00','System','Erinnerung 2 geplant']]},
+  log:[['04.11. 07:30','System','Meldung eingegangen'],['04.11. 18:10','Jonas','Stufe 1: Mängelrüge, Frist 18.11.'],['13.11. 16:08','Firma','Erledigt gemeldet mit Nachweis'],['13.11. 16:10','System','Freigabe-Link an Eigentümer'],['16.11. 08:00','System','Erinnerung 1 an Eigentümer'],['20.11. 08:00','System','Erinnerung 2 geplant']]},
 
  {id:'GW-0020', titel:'Lüftungsanlage pfeift nachts im Schlafzimmer', einheit:'Haus B · WE 27 · 2. OG', eig:'SE', gw:'T03', stage:4, st:'bautraeger', frist:null, bearb:'NK', prio:'', eingang:'2026-11-02', via:'Formular',
   melder:['Sevgi Arslan'], mieter:'—',
@@ -384,7 +384,7 @@ const TICKETS = [
   docs:[['Auslass Schlafzimmer','Foto · Eigentümer'],['Pfeifton.m4a','Audio · Eigentümer'],['Akte_GW-0020.pdf','PDF · 14 Seiten']],
   log:[['02.11. 22:40','System','Meldung eingegangen'],['03.11. 09:00','Niko','Stufe 1: Mängelrüge, Frist 13.11.'],['14.11. 08:30','Niko','Stufe 2: Einschreiben, Nachfrist 17.11.'],['15.11. 11:02','LetterXpress','Zustellung bestätigt'],['18.11. 09:05','Niko','Stufe 3: Akte an Bauträger übergeben']]},
 
- {id:'GW-0010', titel:'Balkonfliese lose', einheit:'Haus A · WE 14 · 2. OG', eig:'SE', gw:'T07', stage:7, skip:[3,4], st:'geschlossen', frist:null, bearb:'ED', prio:'', eingang:'2026-11-02', via:'Formular',
+ {id:'GW-0010', titel:'Balkonfliese lose', einheit:'Haus A · WE 14 · 2. OG', eig:'SE', gw:'T07', stage:7, skip:[3,4], st:'geschlossen', frist:null, bearb:'JK', prio:'', eingang:'2026-11-02', via:'Formular',
   melder:['Gerda Nägele'], mieter:'—',
   conv:{eig:[{d:'in',who:'Gerda Nägele',at:'02.11. 15:00',via:'Formular',t:'Eine Fliese am Balkonrand wackelt.'},{d:'in',who:'Gerda Nägele',at:'12.11. 17:30',via:'Freigabe-Link',t:'Bestätigt: Mangel behoben.',a:'1 Foto'}],gw:[{d:'in',who:'Andreas Bader',at:'11.11. 14:00',via:'Firmen-Link',t:'Erledigt: Fliese neu verlegt.'}],bt:[],int:[]},
   docs:[['Balkonfliese vorher','Foto'],['Balkonfliese nachher','Foto · Eigentümer']],
@@ -562,12 +562,12 @@ function vTrades(){
 }
 
 /* ---------- Team ---------- */
-const SCHED={NK:{1:[8,17],2:[8,17],3:[8,17],4:[8,17],5:[8,14]},ED:{1:[[10,12],[18,20]],2:[[10,12],[18,20]],3:[[10,12],[18,20]],4:[[10,12],[18,20]],5:[[10,12]]},LB:{3:[13,16]}};
+const SCHED={NK:{1:[8,17],2:[8,17],3:[8,17],4:[8,17],5:[8,14]},JK:{1:[[10,12],[18,20]],2:[[10,12],[18,20]],3:[[10,12],[18,20]],4:[[10,12],[18,20]],5:[[10,12]]},LB:{3:[13,16]}};
 function inSched(p,day,h){const s=SCHED[p][day];if(!s)return false;const rs=Array.isArray(s[0])?s:[s];return rs.some(([a,b])=>h>=a&&h<b);}
 function vTeam(){
   const hours=[7,8,9,10,11,12,13,14,15,16,17,18,19]; const dn=['Mo','Di','Mi','Do','Fr'];
-  const stat={NK:['Verfügbar','ok','bis 17:00'],ED:['Außerhalb Arbeitszeit','warn','wieder ab 18:00'],LB:['Verfügbar','ok','bis 16:00']};
-  const load={NK:5,ED:5,LB:0};
+  const stat={NK:['Verfügbar','ok','bis 17:00'],JK:['Außerhalb Arbeitszeit','warn','wieder ab 18:00'],LB:['Verfügbar','ok','bis 16:00']};
+  const load={NK:5,JK:5,LB:0};
   return header('Team & Zeiten','Neue Vorgänge werden nur an Personen zugewiesen, die gerade arbeiten und nicht abwesend sind',`<button class="btn">Person einladen</button>`)+
   `<div class="team">${Object.entries(PEOPLE).map(([k,p])=>`<section class="panel member"><div class="top">${av(k)}<div><b>${p.name}</b><br><span class="muted" style="font-size:12.5px">${p.role}</span></div></div>
     <span class="state"><span class="dot ${stat[k][1]}"></span>${stat[k][0]} <span class="muted" style="font-weight:400">· ${stat[k][2]}</span></span>
@@ -575,10 +575,10 @@ function vTeam(){
   <div class="grid2"><section class="panel"><div class="panel-h"><h2>Arbeitszeiten</h2><span class="muted" style="font-size:12px">rot umrandet = jetzt</span></div>
     <div class="tw">${Object.keys(PEOPLE).map((p,pi)=>`<div style="margin-bottom:12px"><div style="font-weight:600;margin-bottom:4px">${PEOPLE[p].name}</div><div class="sched"><span></span>${hours.map(h=>`<span class="h">${h}</span>`).join('')}
       ${dn.map((d,di)=>`<span class="d">${d}</span>${hours.map(h=>`<span class="cell ${inSched(p,di+1,h)?'on p'+(pi+1):''} ${di===2&&h===14?'now':''}"></span>`).join('')}`).join('')}</div></div>`).join('')}</div>
-    <div class="legend"><span><i style="background:var(--accent)"></i>Niko</span><span><i style="background:var(--info)"></i>Emre</span><span><i style="background:var(--warn)"></i>Lena (nur Mi 13–16 Uhr)</span></div></section>
+    <div class="legend"><span><i style="background:var(--accent)"></i>Niko</span><span><i style="background:var(--info)"></i>Jonas</span><span><i style="background:var(--warn)"></i>Lena (nur Mi 13–16 Uhr)</span></div></section>
   <div><section class="panel"><div class="panel-h"><h2>Abwesenheiten</h2><button class="btn sm" data-act="abwesenheit">Eintragen</button></div>
-    <div class="todo"><button><span class="dot warn"></span><span><b>Emre · Di, 24.11.</b><br><span class="muted" style="font-size:12.5px">ganztägig · Vorgänge bleiben bei ihm, Fristen gehen an Niko</span></span><span></span></button>
-    <button><span class="dot info"></span><span><b>Niko · 22.–31.12.</b><br><span class="muted" style="font-size:12.5px">Urlaub · Vertretung Emre</span></span><span></span></button></div></section>
+    <div class="todo"><button><span class="dot warn"></span><span><b>Jonas · Di, 24.11.</b><br><span class="muted" style="font-size:12.5px">ganztägig · Vorgänge bleiben bei ihm, Fristen gehen an Niko</span></span><span></span></button>
+    <button><span class="dot info"></span><span><b>Niko · 22.–31.12.</b><br><span class="muted" style="font-size:12.5px">Urlaub · Vertretung Jonas</span></span><span></span></button></div></section>
   <section class="panel"><h2 style="margin-bottom:6px">Zuweisungsregeln</h2>
     ${[['auto','Neue Vorgänge automatisch zuweisen','nach geringster Auslastung'],['zeiten','Nur während Arbeitszeit zuweisen','sonst an Admin'],['abw','Abwesenheiten berücksichtigen','Fristen gehen an Vertretung'],['liege','Liegezeit-Alarm nach 24 Std.','unbearbeitet zurück an Admin']].map(([k,l,s])=>`<div class="toggle"><span>${l}<br><span class="muted" style="font-size:12.5px">${s}</span></span><button class="sw" role="switch" aria-label="${l}" aria-checked="${state.toggles[k]}" data-sw="${k}"></button></div>`).join('')}</section></div></div>`;
 }
@@ -661,7 +661,7 @@ function apply(kind,frist){
 }
 function assignDlg(){ const t=T(state.id);
   $('#dlg').innerHTML=`<form class="dlg" id="aform"><h2 style="font-size:18px">Zuweisen · ${t.id}</h2>
-  ${Object.entries(PEOPLE).map(([k,p])=>`<label style="flex-direction:row;align-items:center;gap:10px;font-size:14px;color:var(--fg)"><input type="radio" name="p" value="${k}" ${t.bearb===k?'checked':''}> ${p.name} <span class="muted" style="font-size:12px">${k==='ED'?'· jetzt außerhalb Arbeitszeit, Benachrichtigung um 18:00':k==='LB'?'· verfügbar bis 16:00':'· verfügbar'}</span></label>`).join('')}
+  ${Object.entries(PEOPLE).map(([k,p])=>`<label style="flex-direction:row;align-items:center;gap:10px;font-size:14px;color:var(--fg)"><input type="radio" name="p" value="${k}" ${t.bearb===k?'checked':''}> ${p.name} <span class="muted" style="font-size:12px">${k==='JK'?'· jetzt außerhalb Arbeitszeit, Benachrichtigung um 18:00':k==='LB'?'· verfügbar bis 16:00':'· verfügbar'}</span></label>`).join('')}
   <div class="foot"><button class="btn" type="button" data-close>Abbrechen</button><button class="btn primary" type="submit">Zuweisen</button></div></form>`;
   $('#dlg').showModal();
   $('#aform').onsubmit=e=>{e.preventDefault();const v=new FormData(e.target).get('p');t.bearb=v;t.log.push(['18.11. 14:30',PEOPLE[state.me].name.split(' ')[0],'Zugewiesen an '+PEOPLE[v].name]);$('#dlg').close();toast('Zugewiesen an '+PEOPLE[v].name);render();};
@@ -670,7 +670,7 @@ function reportDlg(){ const o=open();
   $('#dlg').innerHTML=`<div class="dlg"><div class="mono muted" style="font-size:12px">Entwurf · Monatsreport November 2026</div><h2 style="font-size:18px">Gewährleistung Quartier am Illerpark</h2>
   <div class="report"><div><b>${TICKETS.length}</b>Vorgänge gesamt</div><div><b>${o.length}</b>offen</div><div><b>1</b>abgeschlossen</div><div><b>2</b>Einschreiben</div><div><b>1</b>beim Bauträger</div><div><b>3,4 T.</b>Ø Reaktion Firmen</div></div>
   <div class="hint">Auffällig: Torsysteme Allgäu (Ø 9,5 Tage) und Wärme & Luft Riedle (zwei Fristen verstrichen). Empfehlung: Gespräch mit beiden Firmen.</div>
-  <div class="hint">Zeitaufwand HB im November: 31,5 Std. (Niko 18,0 · Emre 13,5). Grundlage für die Neuverhandlung der Pauschale.</div>
+  <div class="hint">Zeitaufwand HB im November: 31,5 Std. (Niko 18,0 · Jonas 13,5). Grundlage für die Neuverhandlung der Pauschale.</div>
   <div class="foot"><button class="btn" type="button" data-close>Schließen</button><button class="btn primary" type="button" data-close data-toast="Report als PDF an Bauträger gesendet">Als PDF senden</button></div></div>`;
   $('#dlg').showModal();
 }
